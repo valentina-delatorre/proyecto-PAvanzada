@@ -1,0 +1,53 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="site.master.cs" Inherits="Consultorio2026.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Consultorio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav">
+                    <li><a runat="server" href="~/Default.aspx">Inicio</a></li>
+
+                    <asp:Panel ID="PnMenuAdmin" runat="server" Visible="false">
+                        <li><a runat="server" href="~/Pacientes/ListadoPacientes.aspx">Pacientes</a></li>
+                        <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx">Especialistas</a></li>
+                        <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx">Turnos</a></li>
+                        <li><a runat="server" href="~/Reportes/ReporteDiario.aspx">Reportes</a></li>
+                    </asp:Panel>
+
+                    <asp:Panel ID="PnMenuEspecialista" runat="server" Visible="false">
+                        <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx">Mis turnos</a></li>
+                        <li><a runat="server" href="~/Atenciones/RegistrarAtencion.aspx">Atenciones</a></li>
+                    </asp:Panel>
+
+                    <asp:Panel ID="PnMenuRecepcionista" runat="server" Visible="false">
+                        <li><a runat="server" href="~/Pacientes/ListadoPacientes.aspx">Pacientes</a></li>
+                        <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx">Turnos</a></li>
+                    </asp:Panel>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><asp:Label ID="LbUsuarioLogueado" runat="server" CssClass="navbar-text" /></li>
+                    <li><asp:LinkButton ID="BtCerrarSesion" runat="server" Text="Cerrar sesión" OnClick="BtCerrarSesion_Click" CssClass="navbar-link" /></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+
+    </form>
+</body>
+</html>
