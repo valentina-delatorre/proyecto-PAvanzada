@@ -67,15 +67,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Especialistas\ListadoEspecialistas.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Reportes\ReporteDiario.aspx" />
     <Content Include="Seguridad\Login.aspx" />
+    <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Especialistas\ListadoEspecialistas.aspx.cs">
+      <DependentUpon>ListadoEspecialistas.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Especialistas\ListadoEspecialistas.aspx.designer.cs">
+      <DependentUpon>ListadoEspecialistas.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reportes\ReporteDiario.aspx.cs">
+      <DependentUpon>ReporteDiario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reportes\ReporteDiario.aspx.designer.cs">
+      <DependentUpon>ReporteDiario.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Seguridad\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -90,11 +107,20 @@
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
+    <Compile Include="Usuarios\ListadoUsuarios.aspx.cs">
+      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Usuarios\ListadoUsuarios.aspx.designer.cs">
+      <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Especialistas\Web.config" />
     <None Include="packages.config" />
     <Content Include="Reportes\Web.config" />
     <Content Include="Site.Master" />
+    <Content Include="Usuarios\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

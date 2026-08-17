@@ -18,22 +18,23 @@
                 <ul class="nav navbar-nav">
                     <li><a runat="server" href="~/Default.aspx">Inicio</a></li>
 
-                    <asp:Panel ID="PnMenuAdmin" runat="server" Visible="false">
-                        <li><a runat="server" href="~/Pacientes/ListadoPacientes.aspx">Pacientes</a></li>
-                        <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx">Especialistas</a></li>
-                        <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx">Turnos</a></li>
-                        <li><a runat="server" href="~/Reportes/ReporteDiario.aspx">Reportes</a></li>
-                    </asp:Panel>
+                    <asp:Panel ID="PnMenuSeguridad" runat="server" Visible="false">
+    <li><a runat="server" href="~/Reportes/ReporteDiario.aspx">Reportes</a></li>
+    <li><a runat="server" href="~/Usuarios/ListadoUsuarios.aspx">Usuarios</a></li>
+    <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx">Especialistas</a></li>
+</asp:Panel>
 
-                    <asp:Panel ID="PnMenuEspecialista" runat="server" Visible="false">
-                        <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx">Mis turnos</a></li>
-                        <li><a runat="server" href="~/Atenciones/RegistrarAtencion.aspx">Atenciones</a></li>
-                    </asp:Panel>
+<asp:Panel ID="PnMenuUsuarios" runat="server" Visible="false">
+    <li><a runat="server" href="~/Usuarios/ListadoUsuarios.aspx">Usuarios</a></li>
+</asp:Panel>
 
-                    <asp:Panel ID="PnMenuRecepcionista" runat="server" Visible="false">
-                        <li><a runat="server" href="~/Pacientes/ListadoPacientes.aspx">Pacientes</a></li>
-                        <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx">Turnos</a></li>
-                    </asp:Panel>
+<asp:Panel ID="PnMenuEspecialistas" runat="server" Visible="false">
+    <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx">Especialistas</a></li>
+</asp:Panel>
+
+<asp:Panel ID="PnMenuReportes" runat="server" Visible="false">
+    <li><a runat="server" href="~/Reportes/ReporteDiario.aspx">Reportes</a></li>
+</asp:Panel>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">

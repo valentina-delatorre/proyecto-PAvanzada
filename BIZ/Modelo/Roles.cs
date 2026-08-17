@@ -2,8 +2,9 @@
 {
     public static class Roles
     {
-        public const string Administrador = "Administrador";
-        public const string Especialista = "Especialista";
-        public const string Recepcionista = "Recepcionista";
+        public const string Seguridad = "Seguridad";
+        public const string Usuarios = "Usuarios";
+        public const string Especialistas = "Especialistas";
+        public const string Reportes = "Reportes";
     }
 }

@@ -14,12 +14,19 @@ namespace Consultorio2026
         }
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-            if (Session != null && Session["Rol"] != null)
+            HttpCookie authCookie = Context.Request.Cookies[FormsAuthentication.FormsCookieName];
+
+            if (authCookie != null)
             {
-                string rol = Session["Rol"].ToString();
-                var identidad = new System.Security.Principal.GenericIdentity(Session["NombreUsuario"].ToString());
-                var principal = new System.Security.Principal.GenericPrincipal(identidad, new string[] { rol });
-                Context.User = principal;
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+
+                if (ticket != null)
+                {
+                    string[] roles = new string[] { ticket.UserData };
+                    var identidad = new FormsIdentity(ticket);
+                    var principal = new System.Security.Principal.GenericPrincipal(identidad, roles);
+                    Context.User = principal;
+                }
             }
         }
     }

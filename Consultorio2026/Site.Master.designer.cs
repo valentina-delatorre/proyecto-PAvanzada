@@ -33,31 +33,40 @@ namespace Consultorio2026
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// Control PnMenuAdmin.
+        /// Control PnMenuSeguridad.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PnMenuAdmin;
+        protected global::System.Web.UI.WebControls.Panel PnMenuSeguridad;
 
         /// <summary>
-        /// Control PnMenuEspecialista.
+        /// Control PnMenuUsuarios.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PnMenuEspecialista;
+        protected global::System.Web.UI.WebControls.Panel PnMenuUsuarios;
 
         /// <summary>
-        /// Control PnMenuRecepcionista.
+        /// Control PnMenuEspecialistas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel PnMenuRecepcionista;
+        protected global::System.Web.UI.WebControls.Panel PnMenuEspecialistas;
+
+        /// <summary>
+        /// Control PnMenuReportes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PnMenuReportes;
 
         /// <summary>
         /// Control LbUsuarioLogueado.

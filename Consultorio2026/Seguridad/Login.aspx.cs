@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Web;
+using System.Web.Security;
 using BIZ.Datos;
 using BIZ.Modelo;
 
@@ -16,7 +18,21 @@ namespace Consultorio2026.Seguridad
 
             if (usuario != null)
             {
-                Session["IdUsuario"] = usuario.IdUsuario;
+                // Creamos el "ticket" de autenticación, guardando el Rol adentro
+                FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
+                    1,
+                    usuario.NombreUsuario,
+                    DateTime.Now,
+                    DateTime.Now.AddMinutes(30),
+                    false,
+                    usuario.Rol
+                );
+
+                string ticketCifrado = FormsAuthentication.Encrypt(ticket);
+                HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketCifrado);
+                Response.Cookies.Add(cookie);
+
+                // La Session la seguimos usando, pero solo para mostrar datos en pantalla
                 Session["NombreUsuario"] = usuario.NombreUsuario;
                 Session["Rol"] = usuario.Rol;
 
