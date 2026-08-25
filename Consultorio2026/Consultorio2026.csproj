@@ -71,6 +71,7 @@
     <Content Include="Global.asax" />
     <Content Include="Reportes\ReporteDiario.aspx" />
     <Content Include="Seguridad\Login.aspx" />
+    <Content Include="Seguridad\Login.css" />
     <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>

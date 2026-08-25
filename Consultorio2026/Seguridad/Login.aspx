@@ -3,22 +3,45 @@
 <!DOCTYPE html>
 <html>
 <head runat="server">
-    <title>Iniciar sesión</title>
+    <meta charset="utf-8" />
+    <title>Consultorio — Iniciar sesión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link href="Login.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div style="max-width:300px; margin:100px auto;">
-            <h3>Iniciar sesión</h3>
+        <div class="login-wrap">
 
-            <asp:Label runat="server" Text="Usuario:" /><br />
-            <asp:TextBox ID="TxtUsuario" runat="server" /><br /><br />
+            <div class="login-hero">
+                <h1>Consultorio<br />de Atención Médica</h1>
+                <p>Gestión de turnos, historias clínicas y especialistas en un solo lugar.</p>
 
-            <asp:Label runat="server" Text="Contraseña:" /><br />
-            <asp:TextBox ID="TxtContrasenia" runat="server" TextMode="Password" /><br /><br />
+                <svg class="ecg-line" viewBox="0 0 380 70" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M0,35 L90,35 L105,10 L120,60 L135,35 L160,35 L172,20 L184,50 L196,35 L380,35" />
+                </svg>
+            </div>
 
-            <asp:Button ID="BtIngresar" runat="server" Text="Ingresar" OnClick="BtIngresar_Click" />
-            <br /><br />
-            <asp:Label ID="LbError" runat="server" ForeColor="Red" />
+            <div class="login-form-side">
+                <div class="login-card">
+                    <h2>Iniciar sesión</h2>
+                    <p class="subtitle">Ingresá tus credenciales para continuar</p>
+
+                    <div class="field">
+                        <label for="<%= TxtUsuario.ClientID %>">Usuario</label>
+                        <asp:TextBox ID="TxtUsuario" runat="server" CssClass="" />
+                    </div>
+
+                    <div class="field">
+                        <label for="<%= TxtContrasenia.ClientID %>">Contraseña</label>
+                        <asp:TextBox ID="TxtContrasenia" runat="server" TextMode="Password" />
+                    </div>
+
+                    <asp:Button ID="BtIngresar" runat="server" Text="Ingresar" OnClick="BtIngresar_Click" CssClass="btn-ingresar" />
+
+                    <asp:Label ID="LbError" runat="server" CssClass="error-msg" />
+                </div>
+            </div>
+
         </div>
     </form>
 </body>

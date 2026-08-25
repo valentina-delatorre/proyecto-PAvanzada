@@ -1,0 +1,196 @@
+﻿:root {
+    --ink: #16241f;
+    --paper: #f4f7f5;
+    --teal: #1f4b44;
+    --teal-deep: #163530;
+    --sage: #9fc2af;
+    --amber: #d7a34e;
+    --error: #b3413a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+}
+
+.login-wrap {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Panel izquierdo — identidad de la clínica + firma visual */
+.login-hero {
+    flex: 1 1 42%;
+    background: linear-gradient(160deg, var(--teal) 0%, var(--teal-deep) 100%);
+    color: #eef4f1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 3.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+    .login-hero h1 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: 2.6rem;
+        font-weight: 600;
+        line-height: 1.15;
+        margin: 0 0 0.75rem;
+        letter-spacing: -0.01em;
+    }
+
+    .login-hero p {
+        color: var(--sage);
+        font-size: 1.02rem;
+        max-width: 26ch;
+        margin: 0;
+    }
+
+.ecg-line {
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 380px;
+    height: 70px;
+}
+
+    .ecg-line path {
+        fill: none;
+        stroke: var(--amber);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 500;
+        stroke-dashoffset: 500;
+        animation: draw 2.2s ease-out forwards 0.3s;
+    }
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ecg-line path {
+        animation: none;
+        stroke-dashoffset: 0;
+    }
+}
+
+/* Panel derecho — el formulario */
+.login-form-side {
+    flex: 1 1 58%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 360px;
+}
+
+    .login-card h2 {
+        font-family: 'Fraunces', Georgia, serif;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0 0 0.35rem;
+    }
+
+    .login-card .subtitle {
+        color: #5b6b66;
+        font-size: 0.92rem;
+        margin: 0 0 2rem;
+    }
+
+.field {
+    margin-bottom: 1.25rem;
+}
+
+    .field label {
+        display: block;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--teal-deep);
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.01em;
+    }
+
+    .field input[type="text"],
+    .field input[type="password"] {
+        width: 100%;
+        padding: 0.7rem 0.85rem;
+        border: 1.5px solid #d7ddda;
+        border-radius: 8px;
+        font-size: 0.98rem;
+        font-family: inherit;
+        background: #fff;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .field input:focus {
+        outline: none;
+        border-color: var(--teal);
+        box-shadow: 0 0 0 3px rgba(31, 75, 68, 0.15);
+    }
+
+.btn-ingresar {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--teal);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    margin-top: 0.25rem;
+}
+
+    .btn-ingresar:hover {
+        background: var(--teal-deep);
+    }
+
+    .btn-ingresar:focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 2px;
+    }
+
+.error-msg {
+    display: block;
+    margin-top: 1rem;
+    color: var(--error);
+    font-size: 0.88rem;
+}
+
+@media (max-width: 760px) {
+    .login-wrap {
+        flex-direction: column;
+    }
+
+    .login-hero {
+        padding: 2.5rem 2rem;
+    }
+
+        .login-hero h1 {
+            font-size: 2rem;
+        }
+
+    .ecg-line {
+        display: none;
+    }
+
+    .login-form-side {
+        padding: 2.5rem 1.5rem;
+    }
+}
