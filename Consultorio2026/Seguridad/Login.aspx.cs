@@ -36,7 +36,16 @@ namespace Consultorio2026.Seguridad
                 Session["NombreUsuario"] = usuario.NombreUsuario;
                 Session["Rol"] = usuario.Rol;
 
-                Response.Redirect("~/Default.aspx");
+                if (usuario.Rol == BIZ.Modelo.Roles.Seguridad)
+                    Response.Redirect("~/Default.aspx");
+                else if (usuario.Rol == BIZ.Modelo.Roles.Usuarios)
+                    Response.Redirect("~/Usuarios/ListadoUsuarios.aspx");
+                else if (usuario.Rol == BIZ.Modelo.Roles.Especialistas)
+                    Response.Redirect("~/Especialistas/ListadoEspecialistas.aspx");
+                else if (usuario.Rol == BIZ.Modelo.Roles.Reportes)
+                    Response.Redirect("~/Reportes/ReporteDiario.aspx");
+                else
+                    Response.Redirect("~/Default.aspx");
             }
             else
             {
