@@ -18,7 +18,6 @@ namespace Consultorio2026.Seguridad
 
             if (usuario != null)
             {
-                // Creamos el "ticket" de autenticación, guardando el Rol adentro
                 FormsAuthenticationTicket ticket = new FormsAuthenticationTicket(
                     1,
                     usuario.NombreUsuario,
@@ -32,20 +31,33 @@ namespace Consultorio2026.Seguridad
                 HttpCookie cookie = new HttpCookie(FormsAuthentication.FormsCookieName, ticketCifrado);
                 Response.Cookies.Add(cookie);
 
-                // La Session la seguimos usando, pero solo para mostrar datos en pantalla
+                Session["IdUsuario"] = usuario.IdUsuario;
                 Session["NombreUsuario"] = usuario.NombreUsuario;
                 Session["Rol"] = usuario.Rol;
 
-                if (usuario.Rol == BIZ.Modelo.Roles.Seguridad)
-                    Response.Redirect("~/Default.aspx");
-                else if (usuario.Rol == BIZ.Modelo.Roles.Usuarios)
+                // Si venía de "Agendar turno", lo devolvemos exactamente a donde iba
+                string returnUrl = Request.QueryString["ReturnUrl"];
+                if (!string.IsNullOrEmpty(returnUrl) && returnUrl.StartsWith("/")
+                    && usuario.Rol == BIZ.Modelo.Roles.Paciente)
+                {
+                    Response.Redirect(returnUrl);
+                    return;
+                }
+
+                if (usuario.Rol == BIZ.Modelo.Roles.Usuarios)
                     Response.Redirect("~/Usuarios/ListadoUsuarios.aspx");
                 else if (usuario.Rol == BIZ.Modelo.Roles.Especialistas)
                     Response.Redirect("~/Especialistas/ListadoEspecialistas.aspx");
+                else if (usuario.Rol == BIZ.Modelo.Roles.Turnos)
+                    Response.Redirect("~/Turnos/ListadoTurnos.aspx");
                 else if (usuario.Rol == BIZ.Modelo.Roles.Reportes)
                     Response.Redirect("~/Reportes/ReporteDiario.aspx");
+                else if (usuario.Rol == BIZ.Modelo.Roles.Medico)
+                    Response.Redirect("~/Medicos/PanelMedico.aspx");
+                else if (usuario.Rol == BIZ.Modelo.Roles.Paciente)
+                    Response.Redirect("~/Portal/PortalPaciente.aspx");
                 else
-                    Response.Redirect("~/Default.aspx");
+                    Response.Redirect("~/Inicio.aspx");
             }
             else
             {

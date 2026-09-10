@@ -43,9 +43,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Datos\Conexion.cs" />
+    <Compile Include="Datos\DatoPacienteDatos.cs" />
+    <Compile Include="Datos\MedicoDatos.cs" />
+    <Compile Include="Datos\ReporteDatos.cs" />
+    <Compile Include="Datos\TurnoDatos.cs" />
     <Compile Include="Datos\UsuarioDatos.cs" />
+    <Compile Include="Modelo\DatoPaciente.cs" />
+    <Compile Include="Modelo\Medico.cs" />
+    <Compile Include="Modelo\ResumenFila.cs" />
     <Compile Include="Modelo\Roles.cs" />
+    <Compile Include="Modelo\Turno.cs" />
     <Compile Include="Modelo\Usuario.cs" />
+    <Compile Include="Modelo\UsuarioListado.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

@@ -67,15 +67,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Home.css" />
+    <Content Include="Content\Landing.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\Site.js" />
+    <Content Include="Content\Theme.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="DetalleServicio.aspx" />
     <Content Include="Especialistas\ListadoEspecialistas.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Inicio.aspx" />
+    <Content Include="Medicos\PanelMedico.aspx" />
+    <Content Include="Portal\AgendarTurno.aspx" />
+    <Content Include="Portal\PortalPaciente.aspx" />
     <Content Include="Reportes\ReporteDiario.aspx" />
     <Content Include="Seguridad\Login.aspx" />
     <Content Include="Seguridad\Login.css" />
+    <Content Include="Seguridad\Registro.aspx" />
+    <Content Include="Servicios.aspx" />
+    <Content Include="Turnos\ListadoTurnos.aspx" />
     <Content Include="Usuarios\ListadoUsuarios.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetalleServicio.aspx.cs">
+      <DependentUpon>DetalleServicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetalleServicio.aspx.designer.cs">
+      <DependentUpon>DetalleServicio.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Especialistas\ListadoEspecialistas.aspx.cs">
       <DependentUpon>ListadoEspecialistas.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -85,6 +113,34 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Inicio.aspx.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Inicio.aspx.designer.cs">
+      <DependentUpon>Inicio.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Medicos\PanelMedico.aspx.cs">
+      <DependentUpon>PanelMedico.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Medicos\PanelMedico.aspx.designer.cs">
+      <DependentUpon>PanelMedico.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Portal\AgendarTurno.aspx.cs">
+      <DependentUpon>AgendarTurno.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Portal\AgendarTurno.aspx.designer.cs">
+      <DependentUpon>AgendarTurno.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Portal\PortalPaciente.aspx.cs">
+      <DependentUpon>PortalPaciente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Portal\PortalPaciente.aspx.designer.cs">
+      <DependentUpon>PortalPaciente.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reportes\ReporteDiario.aspx.cs">
@@ -101,12 +157,34 @@
     <Compile Include="Seguridad\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Seguridad\Registro.aspx.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Seguridad\Registro.aspx.designer.cs">
+      <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Servicios.aspx.cs">
+      <DependentUpon>Servicios.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Servicios.aspx.designer.cs">
+      <DependentUpon>Servicios.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ServiciosCatalogo.cs" />
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Turnos\ListadoTurnos.aspx.cs">
+      <DependentUpon>ListadoTurnos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Turnos\ListadoTurnos.aspx.designer.cs">
+      <DependentUpon>ListadoTurnos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Usuarios\ListadoUsuarios.aspx.cs">
       <DependentUpon>ListadoUsuarios.aspx</DependentUpon>
@@ -118,10 +196,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Especialistas\Web.config" />
+    <Content Include="Medicos\Web.config" />
     <None Include="packages.config" />
     <Content Include="Reportes\Web.config" />
     <Content Include="Site.Master" />
     <Content Include="Usuarios\Web.config" />
+    <Content Include="Turnos\Web.config" />
+    <Content Include="Portal\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

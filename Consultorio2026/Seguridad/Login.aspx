@@ -5,8 +5,8 @@
 <head runat="server">
     <meta charset="utf-8" />
     <title>Consultorio — Iniciar sesión</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
-    <link href="Login.css" rel="stylesheet" />
+    <link runat="server" href="~/Content/Theme.css" rel="stylesheet" />
+    <link runat="server" href="~/Seguridad/Login.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -28,7 +28,7 @@
 
                     <div class="field">
                         <label for="<%= TxtUsuario.ClientID %>">Usuario</label>
-                        <asp:TextBox ID="TxtUsuario" runat="server" CssClass="" />
+                        <asp:TextBox ID="TxtUsuario" runat="server" />
                     </div>
 
                     <div class="field">
@@ -36,9 +36,12 @@
                         <asp:TextBox ID="TxtContrasenia" runat="server" TextMode="Password" />
                     </div>
 
-                    <asp:Button ID="BtIngresar" runat="server" Text="Ingresar" OnClick="BtIngresar_Click" CssClass="btn-ingresar" />
+                    <asp:Button ID="BtIngresar" runat="server" Text="Ingresar" OnClick="BtIngresar_Click" CssClass="btn btn-ingresar" />
 
                     <asp:Label ID="LbError" runat="server" CssClass="error-msg" />
+
+                    <a runat="server" href="~/Seguridad/Registro.aspx" class="back-link registro-link">¿No tenés cuenta? <strong>Registrate</strong></a>
+                    <a runat="server" href="~/Default.aspx" class="back-link">← Volver al inicio</a>
                 </div>
             </div>
 

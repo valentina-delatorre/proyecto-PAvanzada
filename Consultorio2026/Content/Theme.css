@@ -1,0 +1,88 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --ink: #16241f;
+    --paper: #f4f7f5;
+    --teal: #1f4b44;
+    --teal-deep: #163530;
+    --sage: #9fc2af;
+    --amber: #d7a34e;
+    --error: #b3413a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    min-height: 100%;
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+}
+
+h1, h2, h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+}
+
+a {
+    color: var(--teal);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.8rem 1.6rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--teal);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+    .btn:hover {
+        background: var(--teal-deep);
+        color: #fff;
+    }
+
+    .btn:focus-visible {
+        outline: 3px solid var(--amber);
+        outline-offset: 2px;
+    }
+
+.ecg-line {
+    width: 100%;
+    max-width: 380px;
+    height: 70px;
+}
+
+    .ecg-line path {
+        fill: none;
+        stroke: var(--amber);
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-dasharray: 500;
+        stroke-dashoffset: 500;
+        animation: draw 2.2s ease-out forwards 0.3s;
+    }
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ecg-line path {
+        animation: none;
+        stroke-dashoffset: 0;
+    }
+}

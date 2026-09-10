@@ -4,51 +4,48 @@
 
 <html>
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Consultorio</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link runat="server" href="~/Content/Theme.css" rel="stylesheet" />
+    <link runat="server" href="~/Content/Site.css" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
 
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <ul class="nav navbar-nav">
-                    <li><a runat="server" href="~/Default.aspx">Inicio</a></li>
+        <nav class="app-nav">
+            <a runat="server" href="~/Inicio.aspx" class="app-nav-brand">Consultorio</a>
 
-                    <asp:Panel ID="PnMenuSeguridad" runat="server" Visible="false">
-    <li><a runat="server" href="~/Reportes/ReporteDiario.aspx">Reportes</a></li>
-    <li><a runat="server" href="~/Usuarios/ListadoUsuarios.aspx">Usuarios</a></li>
-    <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx">Especialistas</a></li>
-</asp:Panel>
+            <ul class="app-nav-links">
+                <li><a runat="server" href="~/Usuarios/ListadoUsuarios.aspx" data-rol="Usuarios">Usuarios</a></li>
+                <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx" data-rol="Especialistas">Especialistas</a></li>
+                <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx" data-rol="Turnos">Turnos</a></li>
+                <li><a runat="server" href="~/Reportes/ReporteDiario.aspx" data-rol="Reportes">Reportes</a></li>
+            </ul>
 
-<asp:Panel ID="PnMenuUsuarios" runat="server" Visible="false">
-    <li><a runat="server" href="~/Usuarios/ListadoUsuarios.aspx">Usuarios</a></li>
-</asp:Panel>
-
-<asp:Panel ID="PnMenuEspecialistas" runat="server" Visible="false">
-    <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx">Especialistas</a></li>
-</asp:Panel>
-
-<asp:Panel ID="PnMenuReportes" runat="server" Visible="false">
-    <li><a runat="server" href="~/Reportes/ReporteDiario.aspx">Reportes</a></li>
-</asp:Panel>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                    <li><asp:Label ID="LbUsuarioLogueado" runat="server" CssClass="navbar-text" /></li>
-                    <li><asp:LinkButton ID="BtCerrarSesion" runat="server" Text="Cerrar sesión" OnClick="BtCerrarSesion_Click" CssClass="navbar-link" /></li>
-                </ul>
+            <div class="app-nav-user">
+                <asp:Label ID="LbUsuarioLogueado" runat="server" CssClass="app-nav-user-label" />
+                <asp:LinkButton ID="BtCerrarSesion" runat="server" Text="Cerrar sesión" OnClick="BtCerrarSesion_Click" CssClass="app-nav-logout" />
             </div>
         </nav>
 
-        <div class="container">
+        <div class="app-content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
 
+        <div id="modalAcceso" class="modal-overlay" style="display:none;">
+            <div class="modal-box">
+                <h3>Acceso restringido</h3>
+                <p>No tenés acceso a este módulo.</p>
+                <button type="button" class="btn" onclick="cerrarModalAcceso()">Entendido</button>
+            </div>
+        </div>
+
+        <asp:Literal ID="LtRolScript" runat="server" />
+
     </form>
+    <script src="<%= ResolveUrl("~/Content/Site.js") %>"></script>
 </body>
 </html>

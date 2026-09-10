@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Web.Security;
+using System.Web;
 
 namespace Consultorio2026
 {
@@ -10,16 +10,12 @@ namespace Consultorio2026
             if (Session["Rol"] != null)
             {
                 string rol = Session["Rol"].ToString();
-                LbUsuarioLogueado.Text = "Usuario: " + Session["NombreUsuario"] + " (" + rol + ")";
+                string nombre = Session["NombreUsuario"] != null ? Session["NombreUsuario"].ToString() : "";
 
-                if (rol == BIZ.Modelo.Roles.Seguridad)
-                    PnMenuSeguridad.Visible = true;
-                else if (rol == BIZ.Modelo.Roles.Usuarios)
-                    PnMenuUsuarios.Visible = true;
-                else if (rol == BIZ.Modelo.Roles.Especialistas)
-                    PnMenuEspecialistas.Visible = true;
-                else if (rol == BIZ.Modelo.Roles.Reportes)
-                    PnMenuReportes.Visible = true;
+                LbUsuarioLogueado.Text = nombre + " · " + rol;
+
+                string rolSeguro = HttpUtility.JavaScriptStringEncode(rol);
+                LtRolScript.Text = "<script>var rolActual = '" + rolSeguro + "';</script>";
             }
         }
 
@@ -27,8 +23,8 @@ namespace Consultorio2026
         {
             Session.Clear();
             Session.Abandon();
+            System.Web.Security.FormsAuthentication.SignOut();
             Response.Redirect("~/Seguridad/Login.aspx");
         }
-       
     }
 }

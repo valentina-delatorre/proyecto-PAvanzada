@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using BIZ.Datos;
 
 namespace Consultorio2026.Reportes
 {
@@ -11,7 +7,22 @@ namespace Consultorio2026.Reportes
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                LtFechaHoy.Text = DateTime.Today.ToString("dd/MM/yyyy");
 
+                GvHoy.DataSource = TurnoDatos.ListarDelDia();
+                GvHoy.DataBind();
+
+                GvEstados.DataSource = ReporteDatos.TotalesPorEstado();
+                GvEstados.DataBind();
+
+                GvEspecialidades.DataSource = ReporteDatos.TurnosPorEspecialidad();
+                GvEspecialidades.DataBind();
+
+                GvProximos.DataSource = ReporteDatos.ProximosPorMedico();
+                GvProximos.DataBind();
+            }
         }
     }
 }
