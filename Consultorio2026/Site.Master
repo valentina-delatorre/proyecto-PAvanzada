@@ -24,8 +24,14 @@
                 <li><a runat="server" href="~/Reportes/ReporteDiario.aspx" data-rol="Reportes">Reportes</a></li>
             </ul>
 
-            <div class="app-nav-user">
-                <asp:Label ID="LbUsuarioLogueado" runat="server" CssClass="app-nav-user-label" />
+                        <div class="app-nav-user">
+                <a runat="server" href="~/Cuenta/MiCuenta.aspx" class="app-nav-cuenta" title="Mi cuenta">
+                    <svg class="icono-usuario" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <path d="M4 20 C4 15.5 8 13.5 12 13.5 C16 13.5 20 15.5 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <asp:Label ID="LbUsuarioLogueado" runat="server" CssClass="app-nav-user-label" />
+                </a>
                 <asp:LinkButton ID="BtCerrarSesion" runat="server" Text="Cerrar sesión" OnClick="BtCerrarSesion_Click" CssClass="app-nav-logout" />
             </div>
         </nav>

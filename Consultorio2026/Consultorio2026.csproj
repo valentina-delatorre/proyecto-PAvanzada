@@ -72,6 +72,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Content\Site.js" />
     <Content Include="Content\Theme.css" />
+    <Content Include="Cuenta\MiCuenta.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="DetalleServicio.aspx" />
     <Content Include="Especialistas\ListadoEspecialistas.aspx" />
@@ -90,6 +91,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cuenta\MiCuenta.aspx.cs">
+      <DependentUpon>MiCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cuenta\MiCuenta.aspx.designer.cs">
+      <DependentUpon>MiCuenta.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -197,6 +205,7 @@
   <ItemGroup>
     <Content Include="Especialistas\Web.config" />
     <Content Include="Medicos\Web.config" />
+    <Content Include="Cuenta\Web.config" />
     <None Include="packages.config" />
     <Content Include="Reportes\Web.config" />
     <Content Include="Site.Master" />

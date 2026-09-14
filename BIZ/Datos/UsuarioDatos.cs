@@ -137,5 +137,83 @@ namespace BIZ.Datos
             }
             return lista;
         }
+        public static Usuario ObtenerPorId(int idUsuario)
+        {
+            Usuario usuario = null;
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    @"SELECT IdUsuario, NombreUsuario, Rol, Activo, Email, Telefono
+                      FROM Usuario WHERE IdUsuario = @IdUsuario", cn);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    usuario = new Usuario();
+                    usuario.IdUsuario = (int)reader["IdUsuario"];
+                    usuario.NombreUsuario = reader["NombreUsuario"].ToString();
+                    usuario.Rol = reader["Rol"].ToString();
+                    usuario.Activo = (bool)reader["Activo"];
+                    usuario.Email = reader["Email"] == DBNull.Value ? "" : reader["Email"].ToString();
+                    usuario.Telefono = reader["Telefono"] == DBNull.Value ? "" : reader["Telefono"].ToString();
+                }
+            }
+            return usuario;
+        }
+
+        public static bool ValidarContrasenia(int idUsuario, string contrasenia)
+        {
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    @"SELECT COUNT(*) FROM Usuario
+                      WHERE IdUsuario = @IdUsuario AND Contrasenia = @Contrasenia", cn);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cmd.Parameters.AddWithValue("@Contrasenia", contrasenia);
+                cn.Open();
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
+        public static void ActualizarContacto(int idUsuario, string email, string telefono)
+        {
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE Usuario SET Email = @Email, Telefono = @Telefono WHERE IdUsuario = @IdUsuario", cn);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cmd.Parameters.AddWithValue("@Email", (object)email ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Telefono", (object)telefono ?? DBNull.Value);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static void CambiarNombreUsuario(int idUsuario, string nuevoNombre)
+        {
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE Usuario SET NombreUsuario = @Nuevo WHERE IdUsuario = @IdUsuario", cn);
+                cmd.Parameters.AddWithValue("@Nuevo", nuevoNombre);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public static void CambiarContrasenia(int idUsuario, string nuevaContrasenia)
+        {
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "UPDATE Usuario SET Contrasenia = @Nueva WHERE IdUsuario = @IdUsuario", cn);
+                cmd.Parameters.AddWithValue("@Nueva", nuevaContrasenia);
+                cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
+                cn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }
