@@ -84,6 +84,7 @@
     <Content Include="Reportes\ReporteDiario.aspx" />
     <Content Include="Seguridad\Login.aspx" />
     <Content Include="Seguridad\Login.css" />
+    <Content Include="Seguridad\RecuperarPass.aspx" />
     <Content Include="Seguridad\Registro.aspx" />
     <Content Include="Servicios.aspx" />
     <Content Include="Turnos\ListadoTurnos.aspx" />
@@ -171,6 +172,13 @@
     </Compile>
     <Compile Include="Seguridad\Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Seguridad\RecuperarPass.aspx.cs">
+      <DependentUpon>RecuperarPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Seguridad\RecuperarPass.aspx.designer.cs">
+      <DependentUpon>RecuperarPass.aspx</DependentUpon>
     </Compile>
     <Compile Include="Servicios.aspx.cs">
       <DependentUpon>Servicios.aspx</DependentUpon>

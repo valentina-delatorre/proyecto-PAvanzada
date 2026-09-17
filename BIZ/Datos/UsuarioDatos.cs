@@ -7,7 +7,8 @@ namespace BIZ.Datos
 {
     public class UsuarioDatos
     {
-        public static Usuario ValidarLogin(string nombreUsuario, string contrasenia)
+        // Se entra con el correo, no con el nombre de usuario.
+        public static Usuario ValidarLogin(string correo, string contrasenia)
         {
             Usuario usuario = null;
 
@@ -15,12 +16,12 @@ namespace BIZ.Datos
             {
                 string sql = @"SELECT IdUsuario, NombreUsuario, Contrasenia, Rol, Activo
                                FROM Usuario
-                               WHERE NombreUsuario = @NombreUsuario
+                               WHERE Email = @Correo
                                  AND Contrasenia = @Contrasenia
                                  AND Activo = 1";
 
                 SqlCommand cmd = new SqlCommand(sql, cn);
-                cmd.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
+                cmd.Parameters.AddWithValue("@Correo", correo);
                 cmd.Parameters.AddWithValue("@Contrasenia", contrasenia);
 
                 cn.Open();
@@ -51,19 +52,58 @@ namespace BIZ.Datos
             }
         }
 
+        public static bool ExisteCorreo(string correo)
+        {
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    "SELECT COUNT(*) FROM Usuario WHERE Email = @Correo", cn);
+                cmd.Parameters.AddWithValue("@Correo", correo);
+                cn.Open();
+                return (int)cmd.ExecuteScalar() > 0;
+            }
+        }
+
         public static void Registrar(Usuario u)
         {
             using (SqlConnection cn = Conexion.Obtener())
             {
                 SqlCommand cmd = new SqlCommand(
-                    @"INSERT INTO Usuario (NombreUsuario, Contrasenia, Rol, Activo)
-                      VALUES (@NombreUsuario, @Contrasenia, @Rol, 1)", cn);
+                    @"INSERT INTO Usuario (NombreUsuario, Contrasenia, Rol, Activo, Email)
+                      VALUES (@NombreUsuario, @Contrasenia, @Rol, 1, @Email)", cn);
                 cmd.Parameters.AddWithValue("@NombreUsuario", u.NombreUsuario);
                 cmd.Parameters.AddWithValue("@Contrasenia", u.Contrasenia);
                 cmd.Parameters.AddWithValue("@Rol", u.Rol);
+                cmd.Parameters.AddWithValue("@Email", (object)u.Email ?? DBNull.Value);
                 cn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        // Para recuperar la contraseña: buscamos al usuario por su correo.
+        public static Usuario ObtenerPorCorreo(string correo)
+        {
+            Usuario usuario = null;
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    @"SELECT IdUsuario, NombreUsuario, Rol, Activo, Email, Telefono
+                      FROM Usuario WHERE Email = @Correo AND Activo = 1", cn);
+                cmd.Parameters.AddWithValue("@Correo", correo);
+                cn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    usuario = new Usuario();
+                    usuario.IdUsuario = (int)reader["IdUsuario"];
+                    usuario.NombreUsuario = reader["NombreUsuario"].ToString();
+                    usuario.Rol = reader["Rol"].ToString();
+                    usuario.Activo = (bool)reader["Activo"];
+                    usuario.Email = reader["Email"] == DBNull.Value ? "" : reader["Email"].ToString();
+                    usuario.Telefono = reader["Telefono"] == DBNull.Value ? "" : reader["Telefono"].ToString();
+                }
+            }
+            return usuario;
         }
 
         // Todos los usuarios con sus datos "enriquecidos": ficha de paciente y/o de médico

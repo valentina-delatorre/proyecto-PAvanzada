@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BIZ.Datos;
 using BIZ.Modelo;
 
@@ -12,11 +12,17 @@ namespace Consultorio2026.Seguridad
 
         protected void BtRegistrarse_Click(object sender, EventArgs e)
         {
-            string nombre = TxtUsuario.Text.Trim();
+            string correo = TxtCorreo.Text.Trim();
 
-            if (nombre == "" || TxtContrasenia.Text == "")
+            if (correo == "" || TxtContrasenia.Text == "")
             {
-                LbError.Text = "Completá usuario y contraseña.";
+                LbError.Text = "Completá correo y contraseña.";
+                return;
+            }
+
+            if (!EsCorreoValido(correo))
+            {
+                LbError.Text = "Escribí un correo electrónico válido.";
                 return;
             }
 
@@ -26,20 +32,44 @@ namespace Consultorio2026.Seguridad
                 return;
             }
 
-            if (UsuarioDatos.Existe(nombre))
+            if (UsuarioDatos.ExisteCorreo(correo))
             {
-                LbError.Text = "Ese nombre de usuario ya está en uso.";
+                LbError.Text = "Ya hay una cuenta registrada con ese correo.";
                 return;
             }
 
             Usuario nuevo = new Usuario();
-            nuevo.NombreUsuario = nombre;
+            nuevo.Email = correo;
+            nuevo.NombreUsuario = NombreParaMostrar(correo);
             nuevo.Contrasenia = TxtContrasenia.Text;
             nuevo.Rol = BIZ.Modelo.Roles.Paciente;
 
             UsuarioDatos.Registrar(nuevo);
 
             Response.Redirect("~/Seguridad/Login.aspx");
+        }
+
+        private static bool EsCorreoValido(string correo)
+        {
+            try { return new System.Net.Mail.MailAddress(correo).Address == correo; }
+            catch { return false; }
+        }
+
+        // Se entra con el correo, pero arriba a la derecha hay que mostrar algo:
+        // usamos lo que va antes de la arroba, y si ya está tomado le sumamos un número.
+        private static string NombreParaMostrar(string correo)
+        {
+            string baseNombre = correo.Split('@')[0];
+            string nombre = baseNombre;
+            int n = 2;
+
+            while (UsuarioDatos.Existe(nombre))
+            {
+                nombre = baseNombre + n;
+                n++;
+            }
+
+            return nombre;
         }
     }
 }

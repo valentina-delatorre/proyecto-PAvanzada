@@ -5,7 +5,7 @@ namespace BIZ.Datos
 {
     public class CodigoDatos
     {
-        // Genera un código de 6 dígitos, invalida los anteriores, y lo guarda con vencimiento a 10 minutos
+        // Genera un código de 6 dígitos, invalida los anteriores, y lo guarda con vencimiento a 30 minutos
         public static string Generar(int idUsuario)
         {
             string codigo = new Random().Next(100000, 999999).ToString();
@@ -21,7 +21,7 @@ namespace BIZ.Datos
 
                 SqlCommand insertar = new SqlCommand(
                     @"INSERT INTO CodigoVerificacion (IdUsuario, Codigo, FechaExpira, Usado)
-                      VALUES (@IdUsuario, @Codigo, DATEADD(MINUTE, 10, GETDATE()), 0)", cn);
+                      VALUES (@IdUsuario, @Codigo, DATEADD(MINUTE, 30, GETDATE()), 0)", cn);
                 insertar.Parameters.AddWithValue("@IdUsuario", idUsuario);
                 insertar.Parameters.AddWithValue("@Codigo", codigo);
                 insertar.ExecuteNonQuery();
@@ -30,7 +30,7 @@ namespace BIZ.Datos
             return codigo;
         }
 
-        // Valida y "quema" el código: solo sirve una vez, y solo dentro de los 10 minutos
+        // Valida y "quema" el código: solo sirve una vez, y solo dentro de los 30 minutos
         public static bool Validar(int idUsuario, string codigo)
         {
             using (SqlConnection cn = Conexion.Obtener())

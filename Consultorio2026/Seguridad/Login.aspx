@@ -27,8 +27,8 @@
                     <p class="subtitle">Ingresá tus credenciales para continuar</p>
 
                     <div class="field">
-                        <label for="<%= TxtUsuario.ClientID %>">Usuario</label>
-                        <asp:TextBox ID="TxtUsuario" runat="server" />
+                        <label for="<%= TxtCorreo.ClientID %>">Correo electrónico</label>
+                        <asp:TextBox ID="TxtCorreo" runat="server" TextMode="Email" />
                     </div>
 
                     <div class="field">
@@ -40,6 +40,7 @@
 
                     <asp:Label ID="LbError" runat="server" CssClass="error-msg" />
 
+                    <a runat="server" href="~/Seguridad/RecuperarPass.aspx" class="back-link">¿Olvidaste tu contraseña?</a>
                     <a runat="server" href="~/Seguridad/Registro.aspx" class="back-link registro-link">¿No tenés cuenta? <strong>Registrate</strong></a>
                     <a runat="server" href="~/Default.aspx" class="back-link">← Volver al inicio</a>
                 </div>

@@ -26,8 +26,8 @@
                     <p class="subtitle">Completá tus datos para crear la cuenta</p>
 
                     <div class="field">
-                        <label for="<%= TxtUsuario.ClientID %>">Usuario</label>
-                        <asp:TextBox ID="TxtUsuario" runat="server" />
+                        <label for="<%= TxtCorreo.ClientID %>">Correo electrónico</label>
+                        <asp:TextBox ID="TxtCorreo" runat="server" TextMode="Email" />
                     </div>
 
                     <div class="field">

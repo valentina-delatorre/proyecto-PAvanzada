@@ -67,7 +67,7 @@
         </asp:Panel>
 
         <asp:Panel ID="PnPaso2" runat="server" Visible="false">
-            <p class="subtitle-line">Paso 2 de 2: ingresá el código de 6 dígitos que te enviamos. Vence en 10 minutos.</p>
+            <p class="subtitle-line">Paso 2 de 2: ingresá el código de 6 dígitos que te enviamos. Vence en 30 minutos.</p>
             <asp:Panel ID="PnDemoCodigo" runat="server" CssClass="demo-codigo">
                 <strong>MODO DEMO (sin servidor de mail configurado):</strong> tu código es
                 <span class="demo-codigo-num"><asp:Literal ID="LtCodigoDemo" runat="server" /></span>

@@ -14,7 +14,7 @@ namespace Consultorio2026.Seguridad
 
         protected void BtIngresar_Click(object sender, EventArgs e)
         {
-            Usuario usuario = UsuarioDatos.ValidarLogin(TxtUsuario.Text, TxtContrasenia.Text);
+            Usuario usuario = UsuarioDatos.ValidarLogin(TxtCorreo.Text, TxtContrasenia.Text);
 
             if (usuario != null)
             {
@@ -61,7 +61,7 @@ namespace Consultorio2026.Seguridad
             }
             else
             {
-                LbError.Text = "Usuario o contraseña incorrectos.";
+                LbError.Text = "Correo o contraseña incorrectos.";
             }
         }
     }

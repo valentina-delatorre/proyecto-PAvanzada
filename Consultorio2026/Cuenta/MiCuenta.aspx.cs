@@ -78,34 +78,27 @@ namespace Consultorio2026.Cuenta
             { LbErrPass.Text = "Las contraseñas nuevas no coinciden."; return; }
 
             Usuario u = UsuarioDatos.ObtenerPorId(IdUsuarioActual);
-            if (u.Email == "" && u.Telefono == "")
-            { LbErrPass.Text = "Primero cargá un email o teléfono en \"Datos de contacto\", para poder enviarte el código."; return; }
+            if (u.Email == "")
+            { LbErrPass.Text = "Primero cargá tu correo en \"Datos de contacto\", para poder enviarte el código."; return; }
 
             string codigo = CodigoDatos.Generar(IdUsuarioActual);
-            EnviarCodigo(u, codigo);
+
+            try
+            {
+                BIZ.Correo.EnviarCodigo(u.Email, codigo);
+            }
+            catch (Exception ex)
+            {
+                LbErrPass.Text = "No se pudo enviar el correo: " + ex.Message;
+                return;
+            }
 
             // Guardamos la nueva contraseña "en espera" hasta que valide el código
             Session["PassPendiente"] = TxtPassNueva.Text;
 
+            PnDemoCodigo.Visible = false;
             PnPaso1.Visible = false;
             PnPaso2.Visible = true;
-        }
-
-        private void EnviarCodigo(Usuario u, string codigo)
-        {
-            // ===== MODO DEMO: mostramos el código en pantalla =====
-            LtCodigoDemo.Text = codigo;
-
-            // ===== ENVÍO REAL POR MAIL (descomentar y configurar si la cátedra lo pide) =====
-            // Requiere una cuenta de Gmail con "contraseña de aplicación" generada.
-            //
-            // var mensaje = new System.Net.Mail.MailMessage("tucuenta@gmail.com", u.Email,
-            //     "Código de verificación - Consultorio",
-            //     "Tu código es: " + codigo + " (vence en 10 minutos)");
-            // var smtp = new System.Net.Mail.SmtpClient("smtp.gmail.com", 587);
-            // smtp.EnableSsl = true;
-            // smtp.Credentials = new System.Net.NetworkCredential("tucuenta@gmail.com", "contraseña-de-aplicacion");
-            // smtp.Send(mensaje);
         }
 
         protected void BtConfirmarCambio_Click(object sender, EventArgs e)
