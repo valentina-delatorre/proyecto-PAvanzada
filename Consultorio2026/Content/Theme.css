@@ -71,12 +71,23 @@ a {
         stroke-linejoin: round;
         stroke-dasharray: 500;
         stroke-dashoffset: 500;
-        animation: draw 2.2s ease-out forwards 0.3s;
+        animation: latido 2.6s linear infinite 0.3s;
     }
 
-@keyframes draw {
-    to {
+/* El trazo se dibuja de izquierda a derecha y despues la cola sale por el
+   mismo lado, asi que el loop no pega el salto de volver al principio:
+   queda como el monitor de un hospital. */
+@keyframes latido {
+    0% {
+        stroke-dashoffset: 500;
+    }
+
+    55% {
         stroke-dashoffset: 0;
+    }
+
+    100% {
+        stroke-dashoffset: -500;
     }
 }
 
