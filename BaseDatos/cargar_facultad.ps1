@@ -30,6 +30,14 @@ while (-not (Test-NetConnection $server -Port 1433 -InformationLevel Quiet -Warn
 }
 Escribir "Servidor disponible. Cargando la base $base ..."
 
+# Si otra maquina del grupo ya la cargo, no se vuelve a correr (el 01 no se puede ejecutar dos veces)
+$yaCargada = & sqlcmd -S $server -d $base -U $user -P $pass -C -h -1 -W -Q "SET NOCOUNT ON; SELECT COUNT(*) FROM sys.tables WHERE name = 'PERSONA'" 2>&1
+if ("$yaCargada".Trim() -eq "1") {
+    Escribir "La base ya tiene el esquema nuevo (tabla PERSONA). No se carga de nuevo."
+    msg * "Consultorio: la base de la facultad YA estaba cargada. No se hizo nada."
+    exit 0
+}
+
 # 04 solo hace algo si existe la base vieja; 05 no trae SET QUOTED_IDENTIFIER, por eso el -I
 $scripts = "01_esquema.sql", "02_datos.sql", "04_migracion.sql", "03_compatibilidad.sql",
            "05_datos_demo.sql", "06_usuarios_grupo.sql", "07_procedimientos.sql"
