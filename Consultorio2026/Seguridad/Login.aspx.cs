@@ -53,7 +53,11 @@ namespace Consultorio2026.Seguridad
                 else if (usuario.Rol == BIZ.Modelo.Roles.Reportes)
                     Response.Redirect("~/Reportes/ReporteDiario.aspx");
                 else if (usuario.Rol == BIZ.Modelo.Roles.Medico)
-                    Response.Redirect("~/Medicos/PanelMedico.aspx");
+                {
+                    // Cada especialidad tiene su propio panel
+                    Medico medico = MedicoDatos.ObtenerPorUsuario(usuario.IdUsuario);
+                    Response.Redirect(Medicos.PanelMedicoBase.RutaPanel(medico == null ? null : medico.Especialidad));
+                }
                 else if (usuario.Rol == BIZ.Modelo.Roles.Paciente)
                     Response.Redirect("~/Portal/PortalPaciente.aspx");
                 else

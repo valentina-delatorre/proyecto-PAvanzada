@@ -78,7 +78,11 @@
     <Content Include="Especialistas\ListadoEspecialistas.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Inicio.aspx" />
+    <Content Include="Medicos\PanelCardiologia.aspx" />
+    <Content Include="Medicos\PanelClinica.aspx" />
     <Content Include="Medicos\PanelMedico.aspx" />
+    <Content Include="Medicos\PanelPediatria.aspx" />
+    <Content Include="Medicos\PanelTraumatologia.aspx" />
     <Content Include="Portal\AgendarTurno.aspx" />
     <Content Include="Portal\PortalPaciente.aspx" />
     <Content Include="Reportes\ReporteDiario.aspx" />
@@ -130,12 +134,26 @@
     <Compile Include="Inicio.aspx.designer.cs">
       <DependentUpon>Inicio.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Medicos\PanelCardiologia.aspx.cs">
+      <DependentUpon>PanelCardiologia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Medicos\PanelClinica.aspx.cs">
+      <DependentUpon>PanelClinica.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Medicos\PanelMedico.aspx.cs">
       <DependentUpon>PanelMedico.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Medicos\PanelMedico.aspx.designer.cs">
-      <DependentUpon>PanelMedico.aspx</DependentUpon>
+    <Compile Include="Medicos\PanelMedicoBase.cs" />
+    <Compile Include="Medicos\PanelPediatria.aspx.cs">
+      <DependentUpon>PanelPediatria.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Medicos\PanelTraumatologia.aspx.cs">
+      <DependentUpon>PanelTraumatologia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Portal\AgendarTurno.aspx.cs">
       <DependentUpon>AgendarTurno.aspx</DependentUpon>

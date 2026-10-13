@@ -19,7 +19,7 @@
 
             <ul class="app-nav-links">
                 <li><a runat="server" href="~/Usuarios/ListadoUsuarios.aspx" data-rol="Usuarios">Usuarios</a></li>
-                <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx" data-rol="Especialistas">Especialistas</a></li>
+                <li><a runat="server" href="~/Especialistas/ListadoEspecialistas.aspx" data-rol="Especialistas Turnos">Especialistas</a></li>
                 <li><a runat="server" href="~/Turnos/ListadoTurnos.aspx" data-rol="Turnos">Turnos</a></li>
                 <li><a runat="server" href="~/Reportes/ReporteDiario.aspx" data-rol="Reportes">Reportes</a></li>
             </ul>

@@ -5,7 +5,8 @@
     links.forEach(function (link) {
         link.addEventListener('click', function (e) {
             var rolLink = link.getAttribute('data-rol');
-            var tieneAcceso = (rolActual === 'Seguridad' || rolActual === rolLink);
+            // data-rol puede tener mas de un rol separado por espacio (ej. Turnos tambien ve Especialistas)
+            var tieneAcceso = (rolActual === 'Seguridad' || rolLink.split(' ').indexOf(rolActual) >= 0);
 
             if (!tieneAcceso) {
                 e.preventDefault();
