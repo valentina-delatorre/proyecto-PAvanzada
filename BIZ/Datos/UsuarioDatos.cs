@@ -145,7 +145,8 @@ namespace BIZ.Datos
             using (SqlConnection cn = Conexion.Obtener())
             {
                 SqlCommand cmd = new SqlCommand(
-                    "UPDATE Usuario SET Activo = @Activo WHERE IdUsuario = @IdUsuario", cn);
+                    @"UPDATE Usuario SET Activo = @Activo
+                      WHERE IdUsuario = @IdUsuario AND Rol <> 'Seguridad'", cn);
                 cmd.Parameters.AddWithValue("@Activo", activo);
                 cmd.Parameters.AddWithValue("@IdUsuario", idUsuario);
                 cn.Open();

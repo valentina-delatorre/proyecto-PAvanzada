@@ -85,5 +85,29 @@ namespace Consultorio2026.Turnos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GvHistorial;
+
+        protected global::System.Web.UI.WebControls.Panel PnCalendario;
+
+        protected global::System.Web.UI.WebControls.Literal LtMedicoAgenda;
+
+        protected global::System.Web.UI.WebControls.Literal LtMesAgenda;
+
+        protected global::System.Web.UI.WebControls.Repeater RpCalendario;
+
+        protected global::System.Web.UI.WebControls.DropDownList DdlFiltroEstado;
+
+        protected global::System.Web.UI.WebControls.DropDownList DdlFiltroEspecialidad;
+
+        protected global::System.Web.UI.WebControls.TextBox TxtFiltroPaciente;
+
+        protected global::System.Web.UI.WebControls.TextBox TxtFiltroDesde;
+
+        protected global::System.Web.UI.WebControls.TextBox TxtFiltroHasta;
+
+        protected global::System.Web.UI.WebControls.Button BtFiltrar;
+
+        protected global::System.Web.UI.WebControls.Button BtLimpiar;
+
+        protected global::System.Web.UI.WebControls.Label LbResultado;
     }
 }

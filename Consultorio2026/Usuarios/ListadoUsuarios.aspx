@@ -26,10 +26,13 @@
     <asp:Panel ID="PnDetalle" runat="server" Visible="false" CssClass="card">
         <h3>Detalle del usuario</h3>
         <asp:Label ID="LbDetalleUsuario" runat="server" CssClass="subtitle-line" />
+        <asp:Label ID="LbFichaPaciente" runat="server" CssClass="subtitle-line" />
 
         <asp:Button ID="BtCambiarActivo" runat="server" OnClick="BtCambiarActivo_Click" CssClass="btn btn-secondary" />
+        <asp:Label ID="LbProtegido" runat="server" CssClass="ok-msg" />
 
         <h3 style="margin-top: 1.8rem;">Turnos de este usuario</h3>
+        <asp:Label ID="LbTotalTurnos" runat="server" CssClass="subtitle-line" />
         <asp:GridView ID="GvTurnosUsuario" runat="server" AutoGenerateColumns="false" CssClass="data-table"
             EmptyDataText="Este usuario no tiene turnos en el sistema.">
             <Columns>
@@ -40,6 +43,7 @@
                 <asp:BoundField DataField="NombreMedico" HeaderText="Especialista" />
                 <asp:BoundField DataField="Estado" HeaderText="Estado" />
                 <asp:BoundField DataField="EstadoVisual" HeaderText="Situación" />
+                <asp:BoundField DataField="Observaciones" HeaderText="Observaciones" />
             </Columns>
         </asp:GridView>
     </asp:Panel>

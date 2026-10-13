@@ -119,5 +119,31 @@ namespace BIZ.Datos
         {
             return ListarPorFiltro("WHERE T.IdMedico = @Filtro AND T.Estado = 'Solicitado'", "@Filtro", idMedico);
         }
+
+        // Almanaque del mes de un medico: lo arma el procedimiento almacenado SP_AGENDA_MES
+        public static List<DiaAgenda> AgendaMes(int idMedico, int anio, int mes)
+        {
+            List<DiaAgenda> lista = new List<DiaAgenda>();
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand("SP_AGENDA_MES", cn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID_PROFESIONAL", idMedico);
+                cmd.Parameters.AddWithValue("@ANIO", anio);
+                cmd.Parameters.AddWithValue("@MES", mes);
+                cn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    DiaAgenda d = new DiaAgenda();
+                    d.Fecha = (DateTime)reader["FECHA"];
+                    d.Dia = (int)reader["DIA"];
+                    d.Turnos = (int)reader["TURNOS"];
+                    d.Horarios = reader["HORARIOS"].ToString();
+                    lista.Add(d);
+                }
+            }
+            return lista;
+        }
     }
 }

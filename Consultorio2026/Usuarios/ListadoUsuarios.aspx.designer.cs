@@ -58,5 +58,11 @@ namespace Consultorio2026.Usuarios
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GvTurnosUsuario;
+
+        protected global::System.Web.UI.WebControls.Label LbFichaPaciente;
+
+        protected global::System.Web.UI.WebControls.Label LbProtegido;
+
+        protected global::System.Web.UI.WebControls.Label LbTotalTurnos;
     }
 }

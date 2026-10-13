@@ -316,3 +316,51 @@
     color: var(--teal-deep);
     margin-left: 0.4rem;
 }
+/* ---------- Almanaque del especialista (módulo Turnos) ---------- */
+.calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-top: 0.8rem;
+}
+
+.cal-cabecera {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+    text-align: center;
+    padding: 0.3rem 0;
+}
+
+.cal-dia {
+    min-height: 58px;
+    border: 1px solid #e2e8e5;
+    border-radius: 8px;
+    padding: 0.35rem 0.45rem;
+    background: #fff;
+    font-size: 0.75rem;
+}
+
+.cal-vacio {
+    border: none;
+    background: transparent;
+}
+
+.cal-ocupado {
+    background: rgba(31, 75, 68, 0.10);
+    border-color: var(--teal);
+}
+
+.cal-pedido {
+    outline: 2px solid var(--amber);
+}
+
+.cal-num {
+    display: block;
+    font-weight: 700;
+    color: var(--teal-deep);
+}
+
+.cal-horas {
+    color: #3c554b;
+}

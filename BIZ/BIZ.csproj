@@ -51,6 +51,7 @@
     <Compile Include="Datos\TurnoDatos.cs" />
     <Compile Include="Datos\UsuarioDatos.cs" />
     <Compile Include="Modelo\DatoPaciente.cs" />
+    <Compile Include="Modelo\DiaAgenda.cs" />
     <Compile Include="Modelo\Medico.cs" />
     <Compile Include="Modelo\ResumenFila.cs" />
     <Compile Include="Modelo\Roles.cs" />
