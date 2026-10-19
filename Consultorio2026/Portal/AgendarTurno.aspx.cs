@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using BIZ.Datos;
 using BIZ.Modelo;
 
@@ -62,6 +63,73 @@ namespace Consultorio2026.Portal
         protected void DdlEspecialidad_SelectedIndexChanged(object sender, EventArgs e)
         {
             CargarMedicos();
+            CargarCalendario();
+        }
+
+        protected void DdlMedico_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CargarCalendario();
+        }
+
+        protected void TxtFecha_TextChanged(object sender, EventArgs e)
+        {
+            CargarCalendario();
+        }
+
+        // Cada celda del almanaque. Numero vacío = relleno antes del día 1.
+        public class Celda
+        {
+            public string Numero { get; set; }
+            public string Horarios { get; set; }
+            public string Clase { get; set; }
+        }
+
+        private void CargarCalendario()
+        {
+            // El procedimiento es por profesional: con "Cualquier especialista" no hay agenda que mostrar
+            if (DdlMedico.SelectedValue == "0")
+            {
+                PnCalendario.Visible = false;
+                LbSinAgenda.Visible = true;
+                return;
+            }
+
+            // Se muestra el mes de la fecha elegida, o el actual si todavía no eligió
+            DateTime elegida;
+            bool hayFecha = DateTime.TryParse(TxtFecha.Text, out elegida);
+            DateTime mes = hayFecha ? elegida : DateTime.Today;
+
+            List<DiaAgenda> dias = TurnoDatos.AgendaMes(int.Parse(DdlMedico.SelectedValue), mes.Year, mes.Month);
+            List<Celda> celdas = new List<Celda>();
+
+            // Relleno para que el día 1 caiga en su columna (la semana arranca el lunes)
+            DateTime primero = new DateTime(mes.Year, mes.Month, 1);
+            int corrimiento = ((int)primero.DayOfWeek + 6) % 7;
+            for (int i = 0; i < corrimiento; i++)
+                celdas.Add(new Celda { Numero = "", Horarios = "", Clase = "cal-dia cal-vacio" });
+
+            // Un día está completo cuando tiene tomados todos los horarios que se ofrecen
+            int horariosPorDia = DdlHora.Items.Count;
+
+            foreach (DiaAgenda d in dias)
+            {
+                string clase = "cal-dia";
+                if (d.Fecha.Date < DateTime.Today) clase += " cal-pasado";
+                else if (d.Turnos >= horariosPorDia) clase += " cal-completo";
+                else if (d.Turnos > 0) clase += " cal-parcial";
+                else clase += " cal-libre";
+                if (hayFecha && d.Fecha.Date == elegida.Date) clase += " cal-pedido";
+
+                string horarios = d.Turnos > 0 && d.Fecha.Date >= DateTime.Today ? "Ocupado: " + d.Horarios : "";
+                celdas.Add(new Celda { Numero = d.Dia.ToString(), Horarios = horarios, Clase = clase });
+            }
+
+            LtMedicoAgenda.Text = DdlMedico.SelectedItem.Text;
+            LtMesAgenda.Text = mes.ToString("MMMM yyyy", new CultureInfo("es-AR"));
+            RpCalendario.DataSource = celdas;
+            RpCalendario.DataBind();
+            PnCalendario.Visible = true;
+            LbSinAgenda.Visible = false;
         }
 
         protected void BtConfirmar_Click(object sender, EventArgs e)

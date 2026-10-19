@@ -364,3 +364,24 @@
 .cal-horas {
     color: #3c554b;
 }
+
+/* Colores del almanaque que ve el paciente al reservar */
+.cal-libre    { background: #e6f6ec; border-color: #7cc49a; }
+.cal-parcial  { background: #fff4d6; border-color: #e8b949; }
+.cal-completo { background: #fde2e1; border-color: #e07a74; }
+.cal-pasado   { background: #f1f2f2; border-color: #e2e4e4; color: #9aa3a0; }
+.cal-pasado .cal-num { color: #9aa3a0; }
+
+.cal-referencias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+}
+
+.cal-ref {
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+}
