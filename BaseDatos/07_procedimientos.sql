@@ -4,6 +4,8 @@
    profesional (un renglon por dia, con cuantos turnos confirmados tiene y
    a que hora) para dibujar el almanaque del modulo de Turnos.
    Va despues del 03. Se puede correr las veces que haga falta.
+   El servidor de la facultad es SQL Server 2008 R2: por eso no se usan
+   CREATE OR ALTER, DATEFROMPARTS ni STRING_AGG.
    ========================================================================= */
 
 USE ConsultorioI;
@@ -12,7 +14,10 @@ GO
 SET QUOTED_IDENTIFIER ON;
 GO
 
-CREATE OR ALTER PROCEDURE SP_AGENDA_MES
+IF OBJECT_ID('SP_AGENDA_MES', 'P') IS NOT NULL DROP PROCEDURE SP_AGENDA_MES;
+GO
+
+CREATE PROCEDURE SP_AGENDA_MES
     @ID_PROFESIONAL INT,
     @ANIO           INT,
     @MES            INT
@@ -28,7 +33,7 @@ BEGIN
         HORARIOS VARCHAR(500) NOT NULL
     );
 
-    DECLARE @f DATE = DATEFROMPARTS(@ANIO, @MES, 1);
+    DECLARE @f DATE = CAST(CAST(@ANIO AS VARCHAR(4)) + '-' + RIGHT('0' + CAST(@MES AS VARCHAR(2)), 2) + '-01' AS DATE);
     WHILE MONTH(@f) = @MES
     BEGIN
         INSERT INTO #DIAS (FECHA, DIA, TURNOS, HORARIOS) VALUES (@f, DAY(@f), 0, '');
@@ -43,8 +48,15 @@ BEGIN
     JOIN (
         SELECT T.FECHA_TURNO,
                COUNT(*) AS CANTIDAD,
-               STRING_AGG(CONVERT(VARCHAR(5), T.HORA_TURNO), ' - ')
-                   WITHIN GROUP (ORDER BY T.HORA_TURNO) AS HORAS
+               -- las horas del dia unidas con ' - ' (FOR XML PATH es el STRING_AGG de 2008)
+               STUFF((SELECT ' - ' + CONVERT(VARCHAR(5), T2.HORA_TURNO)
+                      FROM TURNOS T2
+                      JOIN AGENDA A2 ON A2.ID_AGENDA = T2.ID_AGENDA
+                      WHERE A2.ID_PERSONA_PROFESIONAL = @ID_PROFESIONAL
+                        AND T2.ESTADO = 'Confirmado'
+                        AND T2.FECHA_TURNO = T.FECHA_TURNO
+                      ORDER BY T2.HORA_TURNO
+                      FOR XML PATH('')), 1, 3, '') AS HORAS
         FROM TURNOS T
         JOIN AGENDA A ON A.ID_AGENDA = T.ID_AGENDA
         WHERE A.ID_PERSONA_PROFESIONAL = @ID_PROFESIONAL

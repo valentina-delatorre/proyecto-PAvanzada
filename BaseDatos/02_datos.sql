@@ -55,11 +55,12 @@ JOIN PERMISOS P ON (R.NOMBRE_ROL = 'Seguridad')
 GO
 
 /* ----- Una persona de cada tipo, con su usuario --------------------------
-   Solo si la base arranca limpia. Si venimos de la base vieja, los usuarios
-   reales los trae 04_migracion.sql y estos chocarian con ellos.
+   Ferreyra es el medico de los datos demo (05) y de la presentacion, asi que
+   se crean tambien cuando venimos de la base vieja: los usuarios migrados no
+   traen correo ni DNI, no chocan con estos.
    -------------------------------------------------------------------------- */
 
-IF OBJECT_ID('Usuario_old', 'U') IS NULL
+IF NOT EXISTS (SELECT 1 FROM PERSONA WHERE CORREO = 'm.ferreyra@consultorio.com')
 BEGIN
     INSERT INTO PERSONA (NOMBRE, APELLIDO, TIPO_DNI, DNI, CORREO, TELEFONO, ID_CATEGORIA, ID_ESPECIALIDAD)
     SELECT 'Ana', 'Duarte', 'DNI', '30111222', 'ana.duarte@consultorio.com', '1155000001',
@@ -75,7 +76,7 @@ BEGIN
     INSERT INTO USUARIOS (ID_PERSONA, NOMBRE_USUARIOS, CONTRASENIA, ID_ROL)
     SELECT P.ID_PERSONA, v.USUARIO, v.PASS, R.ID_ROL
     FROM (VALUES
-        ('30111222', 'admin',     'admin123',    'Seguridad'),
+        ('30111222', 'aduarte',   'admin123',    'Seguridad'),
         ('28999888', 'mferreyra', 'medico123',   'Medico'),
         ('42333444', 'lgomez',    'paciente123', 'Paciente')
     ) AS v(DNI, USUARIO, PASS, ROL)

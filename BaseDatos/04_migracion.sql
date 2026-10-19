@@ -8,6 +8,11 @@
 
    Para no andar con cursores, PERSONA y TURNOS llevan durante la migracion
    una columna auxiliar con el id viejo. Al final se borran.
+
+   La base vieja de la facultad es anterior a la local: Usuario no tiene
+   Email ni Telefono, y no existen DatoPaciente ni CodigoVerificacion.
+   Las especialidades viejas vienen con tilde ("Cardiología"), por eso se
+   comparan sin acentos para no duplicarlas.
    ========================================================================= */
 
 USE ConsultorioI;
@@ -37,8 +42,8 @@ SELECT DISTINCT U.Rol FROM Usuario_old U
 WHERE U.Rol IS NOT NULL
   AND NOT EXISTS (SELECT 1 FROM ROLES R WHERE R.NOMBRE_ROL = U.Rol);
 
-INSERT INTO PERSONA (NOMBRE, APELLIDO, CORREO, TELEFONO, ID_CATEGORIA, MIG_USUARIO)
-SELECT U.NombreUsuario, '(sin completar)', U.Email, U.Telefono,
+INSERT INTO PERSONA (NOMBRE, APELLIDO, ID_CATEGORIA, MIG_USUARIO)
+SELECT U.NombreUsuario, '(sin completar)',
        (SELECT ID_CATEGORIA FROM CATEGORIA WHERE NOMBRE =
             CASE U.Rol WHEN 'Medico'   THEN 'Profesional'
                        WHEN 'Paciente' THEN 'Paciente'
@@ -55,15 +60,13 @@ GO
 
 /* ----- 2. Fichas de paciente -> completan la PERSONA --------------------- */
 
-UPDATE P
-SET NOMBRE   = D.Nombre,
-    APELLIDO = D.Apellido,
-    TIPO_DNI = 'DNI',
-    DNI      = D.Dni,
-    TELEFONO = ISNULL(D.Telefono, P.TELEFONO),
-    CORREO   = ISNULL(D.Email, P.CORREO)
-FROM PERSONA P
-JOIN DatoPaciente_old D ON D.IdUsuario = P.MIG_USUARIO;
+-- (solo si la base vieja tenia esa tabla; en la facultad no existe)
+IF OBJECT_ID('DatoPaciente_old', 'U') IS NOT NULL
+EXEC('UPDATE P
+      SET NOMBRE = D.Nombre, APELLIDO = D.Apellido, TIPO_DNI = ''DNI'', DNI = D.Dni,
+          TELEFONO = ISNULL(D.Telefono, P.TELEFONO), CORREO = ISNULL(D.Email, P.CORREO)
+      FROM PERSONA P
+      JOIN DatoPaciente_old D ON D.IdUsuario = P.MIG_USUARIO');
 GO
 
 /* ----- 3. Medicos -> personas profesionales ------------------------------ */
@@ -71,12 +74,14 @@ GO
 INSERT INTO ESPECIALIDAD (NOMBRE)
 SELECT DISTINCT M.Especialidad FROM Medico_old M
 WHERE M.Especialidad IS NOT NULL
-  AND NOT EXISTS (SELECT 1 FROM ESPECIALIDAD E WHERE E.NOMBRE = M.Especialidad);
+  AND NOT EXISTS (SELECT 1 FROM ESPECIALIDAD E
+                  WHERE E.NOMBRE = M.Especialidad COLLATE Modern_Spanish_CI_AI);
 
 INSERT INTO ESPECIALIDAD (NOMBRE)
 SELECT DISTINCT T.Especialidad FROM Turno_old T
 WHERE T.Especialidad IS NOT NULL
-  AND NOT EXISTS (SELECT 1 FROM ESPECIALIDAD E WHERE E.NOMBRE = T.Especialidad);
+  AND NOT EXISTS (SELECT 1 FROM ESPECIALIDAD E
+                  WHERE E.NOMBRE = T.Especialidad COLLATE Modern_Spanish_CI_AI);
 GO
 
 DECLARE @prof INT = (SELECT ID_CATEGORIA FROM CATEGORIA WHERE NOMBRE = 'Profesional');
@@ -87,13 +92,13 @@ SET NOMBRE = M.Nombre, APELLIDO = M.Apellido, ID_CATEGORIA = @prof,
     ID_ESPECIALIDAD = E.ID_ESPECIALIDAD, MIG_MEDICO = M.IdMedico
 FROM PERSONA P
 JOIN Medico_old M        ON M.IdUsuario = P.MIG_USUARIO
-LEFT JOIN ESPECIALIDAD E ON E.NOMBRE    = M.Especialidad;
+LEFT JOIN ESPECIALIDAD E ON E.NOMBRE    = M.Especialidad COLLATE Modern_Spanish_CI_AI;
 
 -- el que no tenia usuario entra como persona nueva
 INSERT INTO PERSONA (NOMBRE, APELLIDO, ID_CATEGORIA, ID_ESPECIALIDAD, MIG_MEDICO)
 SELECT M.Nombre, M.Apellido, @prof, E.ID_ESPECIALIDAD, M.IdMedico
 FROM Medico_old M
-LEFT JOIN ESPECIALIDAD E ON E.NOMBRE = M.Especialidad
+LEFT JOIN ESPECIALIDAD E ON E.NOMBRE = M.Especialidad COLLATE Modern_Spanish_CI_AI
 WHERE NOT EXISTS (SELECT 1 FROM PERSONA P WHERE P.MIG_MEDICO = M.IdMedico);
 GO
 
@@ -132,11 +137,13 @@ GO
 
 /* ----- 5. Codigos de verificacion ---------------------------------------- */
 
-INSERT INTO CodigoVerificacion (IdUsuario, Codigo, FechaExpira, Usado)
-SELECT U.ID_USUARIOS, C.Codigo, C.FechaExpira, C.Usado
-FROM CodigoVerificacion_old C
-JOIN PERSONA P  ON P.MIG_USUARIO = C.IdUsuario
-JOIN USUARIOS U ON U.ID_PERSONA  = P.ID_PERSONA;
+-- (idem: en la facultad no habia tabla de codigos)
+IF OBJECT_ID('CodigoVerificacion_old', 'U') IS NOT NULL
+EXEC('INSERT INTO CodigoVerificacion (IdUsuario, Codigo, FechaExpira, Usado)
+      SELECT U.ID_USUARIOS, C.Codigo, C.FechaExpira, C.Usado
+      FROM CodigoVerificacion_old C
+      JOIN PERSONA P  ON P.MIG_USUARIO = C.IdUsuario
+      JOIN USUARIOS U ON U.ID_PERSONA  = P.ID_PERSONA');
 GO
 
 /* ----- 6. Correo de inicio de sesion -------------------------------------
