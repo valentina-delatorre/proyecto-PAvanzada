@@ -365,23 +365,226 @@
     color: #3c554b;
 }
 
-/* Colores del almanaque que ve el paciente al reservar */
-.cal-libre    { background: #e6f6ec; border-color: #7cc49a; }
-.cal-parcial  { background: #fff4d6; border-color: #e8b949; }
-.cal-completo { background: #fde2e1; border-color: #e07a74; }
-.cal-pasado   { background: #f1f2f2; border-color: #e2e4e4; color: #9aa3a0; }
-.cal-pasado .cal-num { color: #9aa3a0; }
+/* ---------- Almanaque que ve el paciente al reservar ---------- */
+.calendario-reserva {
+    margin: 1.2rem 0;
+}
+
+.cal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 320px;
+    margin: 0.6rem auto 0;
+}
+
+.cal-mes {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--teal-deep);
+    text-transform: capitalize;
+}
+
+.cal-flecha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid #d5dfda;
+    background: #fff;
+    color: var(--teal-deep);
+    font-size: 1.3rem;
+    text-decoration: none;
+}
+
+.cal-flecha:hover { background: rgba(31, 75, 68, 0.08); }
+.cal-flecha.aspNetDisabled { opacity: 0.3; pointer-events: none; }
+
+.calendario-reserva .cal-dia {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 76px;
+    padding: 0.5rem;
+    border-radius: 10px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.calendario-reserva a.cal-dia:not(.aspNetDisabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+}
+
+.calendario-reserva .cal-num { font-size: 1.1rem; }
+
+.cal-disp {
+    font-size: 0.68rem;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.cal-libre    { background: #eaf7ef; border-color: #9fd5b4; }
+.cal-parcial  { background: #fff6dd; border-color: #ecc66a; }
+.cal-completo { background: #fde7e5; border-color: #eba39e; }
+.cal-pasado   { background: #f4f5f5; border-color: #eceeee; }
+
+.cal-libre .cal-disp    { color: #2f8a57; }
+.cal-parcial .cal-disp  { color: #a2700c; }
+.cal-completo .cal-disp { color: #c0453e; }
+.cal-pasado .cal-num    { color: #b5bcba; font-weight: 500; }
+
+.calendario-reserva .cal-elegido,
+.cal-ref.cal-elegido {
+    background: var(--teal-deep);
+    border-color: var(--teal-deep);
+    color: #fff;
+}
+
+.calendario-reserva .cal-elegido .cal-num,
+.calendario-reserva .cal-elegido .cal-disp { color: #fff; }
 
 .cal-referencias {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 0.5rem;
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
+    margin-top: 0.8rem;
+    font-size: 0.72rem;
 }
 
 .cal-ref {
     border: 1px solid;
-    border-radius: 6px;
-    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
 }
+
+/* ---------- Solicitar turno en pasos (portal del paciente) ---------- */
+.paso {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 1.6rem 0 0.9rem;
+    font-weight: 600;
+    color: var(--teal-deep);
+}
+
+.paso:first-of-type { margin-top: 0.6rem; }
+
+.paso-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--teal-deep);
+    color: #fff;
+    font-size: 0.8rem;
+}
+
+.fecha-elegida {
+    display: block;
+    margin-bottom: 0.7rem;
+    color: #5b6f67;
+    font-size: 0.9rem;
+}
+
+.fecha-elegida::first-letter { text-transform: uppercase; }
+
+/* Horarios como píldoras: el radio se oculta y se pinta el label */
+.horas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.horas input { display: none; }
+
+.horas label {
+    padding: 0.5rem 1rem;
+    border: 1.5px solid #d7ddda;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--teal-deep);
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+}
+
+.horas label:hover { border-color: var(--teal); }
+
+.horas input:checked + label {
+    background: var(--teal-deep);
+    border-color: var(--teal-deep);
+    color: #fff;
+}
+
+.horas-del-dia {
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    border: 1px solid #e2e8e5;
+    border-radius: 12px;
+    background: #f8fbf9;
+}
+
+.horas-del-dia .fecha-elegida {
+    font-weight: 600;
+    color: var(--teal-deep);
+}
+
+/* ---------- Mis turnos (portal del paciente) ---------- */
+.turno-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid #edf1ef;
+}
+
+.turno-item:last-child { border-bottom: none; }
+
+.turno-fecha {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: #eef4f1;
+    color: var(--teal-deep);
+}
+
+.turno-dia { font-size: 1.25rem; font-weight: 700; line-height: 1; }
+.turno-mes { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; margin-top: 0.2rem; }
+
+.turno-info { flex: 1; color: var(--ink); }
+
+.turno-detalle {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 0.85rem;
+    color: #6b7d76;
+}
+
+.estado {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: #eef1f0;
+    color: #5b6f67;
+}
+
+.estado-confirmado { background: #e3f4ea; color: #2f8a57; }
+.estado-solicitado { background: #fff3d6; color: #a2700c; }
+.estado-rechazado,
+.estado-cancelado  { background: #fde7e5; color: #c0453e; }
+.estado-atendido   { background: #e6eef6; color: #3d6a96; }

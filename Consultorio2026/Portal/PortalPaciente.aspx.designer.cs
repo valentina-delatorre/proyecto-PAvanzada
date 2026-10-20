@@ -42,31 +42,94 @@ namespace Consultorio2026.Portal
         protected global::System.Web.UI.WebControls.DropDownList DdlTipoConsulta;
 
         /// <summary>
-        /// Control TxtFecha.
+        /// Control HfFecha.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtFecha;
+        protected global::System.Web.UI.WebControls.HiddenField HfFecha;
 
         /// <summary>
-        /// Control DdlHora.
+        /// Control PnHoras.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DdlHora;
+        protected global::System.Web.UI.WebControls.Panel PnHoras;
 
         /// <summary>
-        /// Control TxtObservaciones.
+        /// Control LbFechaElegida.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TxtObservaciones;
+        protected global::System.Web.UI.WebControls.Label LbFechaElegida;
+
+        /// <summary>
+        /// Control RblHora.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RadioButtonList RblHora;
+
+        /// <summary>
+        /// Control PnCalendario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel PnCalendario;
+
+        /// <summary>
+        /// Control LtMedicoAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LtMedicoAgenda;
+
+        /// <summary>
+        /// Control BtMesAnterior.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton BtMesAnterior;
+
+        /// <summary>
+        /// Control LtMesAgenda.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LtMesAgenda;
+
+        /// <summary>
+        /// Control BtMesSiguiente.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton BtMesSiguiente;
+
+        /// <summary>
+        /// Control RpCalendario.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater RpCalendario;
 
         /// <summary>
         /// Control BtSolicitar.
@@ -96,12 +159,21 @@ namespace Consultorio2026.Portal
         protected global::System.Web.UI.WebControls.Label LbError;
 
         /// <summary>
-        /// Control GvMisTurnos.
+        /// Control RpMisTurnos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GvMisTurnos;
+        protected global::System.Web.UI.WebControls.Repeater RpMisTurnos;
+
+        /// <summary>
+        /// Control LbSinTurnos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LbSinTurnos;
     }
 }
