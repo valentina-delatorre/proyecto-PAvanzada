@@ -15,9 +15,11 @@
             document.documentElement.setAttribute('data-tema', tema);
         } catch (e) { }
     </script>
-    <link runat="server" href="~/Content/Theme.css" rel="stylesheet" />
-    <link runat="server" href="~/Content/Site.css" rel="stylesheet" />
-    <link runat="server" href="~/Content/Asistente.css" rel="stylesheet" />
+    <%-- Recurso() le suma "?v=..." con la fecha del archivo: cuando cambia el CSS o el JS,
+         el navegador baja el nuevo en vez de usar el que tenia guardado. --%>
+    <link href="<%= Recurso("~/Content/Theme.css") %>" rel="stylesheet" />
+    <link href="<%= Recurso("~/Content/Site.css") %>" rel="stylesheet" />
+    <link href="<%= Recurso("~/Content/Asistente.css") %>" rel="stylesheet" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -94,7 +96,7 @@
         </asp:PlaceHolder>
 
     </form>
-    <script src="<%= ResolveUrl("~/Content/Site.js") %>"></script>
-    <script src="<%= ResolveUrl("~/Content/Asistente.js") %>"></script>
+    <script src="<%= Recurso("~/Content/Site.js") %>"></script>
+    <script src="<%= Recurso("~/Content/Asistente.js") %>"></script>
 </body>
 </html>
