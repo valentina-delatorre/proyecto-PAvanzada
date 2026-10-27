@@ -75,6 +75,15 @@ namespace Consultorio2026
             LtSugerencias.Text = html;
         }
 
+        // La direccion de un CSS o JS con su "version" (la fecha en que se modifico el archivo).
+        // Asi el navegador no se queda con una copia vieja guardada despues de un cambio.
+        protected string Recurso(string ruta)
+        {
+            string archivo = Server.MapPath(ruta);
+            long version = System.IO.File.Exists(archivo) ? System.IO.File.GetLastWriteTimeUtc(archivo).Ticks : 0;
+            return ResolveUrl(ruta) + "?v=" + version;
+        }
+
         protected void BtCerrarSesion_Click(object sender, EventArgs e)
         {
             Session.Clear();
