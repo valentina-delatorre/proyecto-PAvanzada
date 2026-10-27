@@ -23,14 +23,17 @@ namespace Consultorio2026.Cuenta
             string extra = "";
             Medico medico = MedicoDatos.ObtenerPorUsuario(u.IdUsuario);
             if (medico != null)
-                extra = " — Ficha profesional: Dr/a. " + medico.NombreCompleto + " (" + medico.Especialidad + ")";
+                extra = " · Ficha profesional: Dr/a. " + medico.NombreCompleto + " (" + medico.Especialidad + ")";
 
             DatoPaciente datos = DatoPacienteDatos.Obtener(u.IdUsuario);
             if (datos != null)
-                extra += " — Datos personales: " + datos.Apellido + ", " + datos.Nombre + " (DNI " + datos.Dni + ")";
+                extra += " · Datos personales: " + datos.Apellido + ", " + datos.Nombre + " (DNI " + datos.Dni + ")";
 
-            LbDatos.Text = "Usuario: <strong>" + u.NombreUsuario + "</strong> — Rol: " + u.Rol +
-                           " — Estado: " + (u.Activo ? "Activo" : "Dado de baja") + extra;
+            string nombre;
+            UsuarioDatos.NombresReales().TryGetValue(u.IdUsuario, out nombre);
+            LtNombre.Text = HttpUtility.HtmlEncode(nombre ?? u.NombreUsuario);
+            LtDatos.Text = "Usuario <strong>" + HttpUtility.HtmlEncode(u.NombreUsuario) + "</strong> · Rol " + u.Rol +
+                           " · " + (u.Activo ? "Activo" : "Dado de baja") + extra;
 
             TxtEmail.Text = u.Email;
             TxtTelefono.Text = u.Telefono;

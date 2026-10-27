@@ -2,14 +2,15 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h2>Mi cuenta</h2>
-    <p class="subtitle-line">Tu información y la configuración de tu acceso al sistema.</p>
+    <section class="cabecera cabecera-sola">
+        <div>
+            <span class="cabecera-eyebrow">Mi cuenta</span>
+            <h2><asp:Literal ID="LtNombre" runat="server" /></h2>
+            <p><asp:Literal ID="LtDatos" runat="server" /></p>
+        </div>
+    </section>
 
-    <div class="card">
-        <h3>Mis datos</h3>
-        <asp:Label ID="LbDatos" runat="server" CssClass="subtitle-line" />
-    </div>
-
+    <div class="columnas">
     <div class="card">
         <h3>Datos de contacto</h3>
         <p class="subtitle-line">A este mail o teléfono te va a llegar el código cuando quieras cambiar tu contraseña.</p>
@@ -42,6 +43,8 @@
         <asp:Button ID="BtCambiarUsuario" runat="server" Text="Cambiar nombre de usuario" OnClick="BtCambiarUsuario_Click" CssClass="btn" />
         <asp:Label ID="LbMsjUsuario" runat="server" CssClass="ok-msg" />
         <asp:Label ID="LbErrUsuario" runat="server" CssClass="error-msg" />
+    </div>
+
     </div>
 
     <div class="card">

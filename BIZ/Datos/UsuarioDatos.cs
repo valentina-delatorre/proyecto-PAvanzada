@@ -112,7 +112,7 @@ namespace BIZ.Datos
             List<UsuarioListado> lista = new List<UsuarioListado>();
             using (SqlConnection cn = Conexion.Obtener())
             {
-                string sql = @"SELECT U.IdUsuario, U.NombreUsuario, U.Rol, U.Activo,
+                string sql = @"SELECT U.IdUsuario, U.NombreUsuario, U.Rol, U.Activo, ISNULL(U.Email, '-') AS Email,
                                       ISNULL(D.Apellido + ', ' + D.Nombre, '-') AS NombreCompleto,
                                       ISNULL(D.Dni, '-') AS Dni,
                                       ISNULL(M.Especialidad, '-') AS Especialidad
@@ -134,6 +134,7 @@ namespace BIZ.Datos
                     u.NombreCompleto = reader["NombreCompleto"].ToString();
                     u.Dni = reader["Dni"].ToString();
                     u.Especialidad = reader["Especialidad"].ToString();
+                    u.Email = reader["Email"].ToString();
                     lista.Add(u);
                 }
             }
@@ -178,6 +179,30 @@ namespace BIZ.Datos
             }
             return lista;
         }
+
+        // Nombre y apellido de la persona de cada usuario (IdUsuario -> "Carla Benitez").
+        // Si la persona todavia no completo sus datos, queda el nombre de usuario.
+        public static Dictionary<int, string> NombresReales()
+        {
+            Dictionary<int, string> nombres = new Dictionary<int, string>();
+            using (SqlConnection cn = Conexion.Obtener())
+            {
+                SqlCommand cmd = new SqlCommand(
+                    @"SELECT U.ID_USUARIOS, U.NOMBRE_USUARIOS, P.NOMBRE, P.APELLIDO
+                      FROM USUARIOS U JOIN PERSONA P ON P.ID_PERSONA = U.ID_PERSONA", cn);
+                cn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    string apellido = reader["APELLIDO"].ToString();
+                    nombres[(int)reader["ID_USUARIOS"]] = apellido == "(sin completar)"
+                        ? reader["NOMBRE_USUARIOS"].ToString()
+                        : reader["NOMBRE"] + " " + apellido;
+                }
+            }
+            return nombres;
+        }
+
         public static Usuario ObtenerPorId(int idUsuario)
         {
             Usuario usuario = null;

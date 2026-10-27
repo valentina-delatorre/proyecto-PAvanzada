@@ -40,7 +40,8 @@ if ("$yaCargada".Trim() -eq "1") {
 
 # 04 solo hace algo si existe la base vieja; 05 no trae SET QUOTED_IDENTIFIER, por eso el -I
 $scripts = "01_esquema.sql", "02_datos.sql", "04_migracion.sql", "03_compatibilidad.sql",
-           "05_datos_demo.sql", "06_usuarios_grupo.sql", "07_procedimientos.sql"
+           "05_datos_demo.sql", "06_usuarios_grupo.sql", "07_procedimientos.sql",
+           "08_accesos.sql"
 
 foreach ($s in $scripts) {
     Escribir "== $s"

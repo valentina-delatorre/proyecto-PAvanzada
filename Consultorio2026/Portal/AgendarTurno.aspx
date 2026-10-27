@@ -2,8 +2,13 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h2>Agendar turno</h2>
-    <p class="subtitle-line">Completá tus datos y elegí el turno que mejor te quede. Todos los campos con * son obligatorios.</p>
+    <section class="cabecera cabecera-sola">
+        <div>
+            <span class="cabecera-eyebrow">Portal del paciente</span>
+            <h2>Agendar turno</h2>
+            <p>Completá tus datos y elegí el turno que mejor te quede. Todos los campos con * son obligatorios.</p>
+        </div>
+    </section>
 
     <div class="card">
         <h3>Tus datos personales</h3>

@@ -2,10 +2,18 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <div class="portal-hero">
-        <h2>Consultorio de Atención Médica</h2>
-        <p>Atendemos con especialistas en cardiología, pediatría y traumatología. Solicitá tu turno online y seguí el estado de tus consultas desde acá.</p>
-    </div>
+    <%-- Cabecera: el saludo con el nombre del paciente y sus dos numeros (los llena CargarMisTurnos) --%>
+    <section class="cabecera">
+        <div>
+            <span class="cabecera-eyebrow">Portal del paciente</span>
+            <h2><asp:Literal ID="LtSaludo" runat="server" /></h2>
+            <p>Pedí tu turno eligiendo el día en el almanaque, y seguí el estado de tus consultas desde acá. También podés pedírselo al asistente, abajo a la derecha.</p>
+        </div>
+        <dl class="cabecera-cifras cabecera-cifras-2">
+            <div><dt>Próximos turnos</dt><dd><asp:Literal ID="LtProximos" runat="server" /></dd></div>
+            <div class="cifra-alerta"><dt>Esperando confirmación</dt><dd><asp:Literal ID="LtEsperando" runat="server" /></dd></div>
+        </dl>
+    </section>
 
     <div class="card">
         <h3>Solicitar un turno</h3>

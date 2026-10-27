@@ -5,6 +5,7 @@
 <head runat="server">
     <meta charset="utf-8" />
     <title>Consultorio — Registrarse</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4b44'/%3E%3Cpath d='M4 17h7l2-6 3 11 2-5h10' fill='none' stroke='%23d7a34e' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
     <link runat="server" href="~/Content/Theme.css" rel="stylesheet" />
     <link runat="server" href="~/Seguridad/Login.css" rel="stylesheet" />
 </head>

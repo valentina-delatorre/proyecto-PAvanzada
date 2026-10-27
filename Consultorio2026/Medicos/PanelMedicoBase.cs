@@ -66,12 +66,12 @@ namespace Consultorio2026.Medicos
         {
             if (medico == null)
             {
-                LbBienvenida.Text = "Tu usuario no está vinculado a ninguna ficha de médico. Avisale al administrador.";
+                LbBienvenida.Text = "Tu usuario no tiene ficha de médico. Avisale al administrador.";
                 PnPanel.Visible = false;
                 return;
             }
 
-            LbBienvenida.Text = "Dr/a. <strong>" + medico.NombreCompleto + "</strong> — " + medico.Especialidad;
+            LbBienvenida.Text = "Dr/a. " + System.Web.HttpUtility.HtmlEncode(medico.Nombre + " " + medico.Apellido);
 
             List<Turno> pendientes = TurnoDatos.ListarPendientesPorMedico(medico.IdMedico);
             List<Turno> agenda = TurnoDatos.ListarPorMedico(medico.IdMedico);

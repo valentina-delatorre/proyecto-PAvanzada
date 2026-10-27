@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 using BIZ.Datos;
 using BIZ.Modelo;
@@ -20,9 +22,26 @@ namespace Consultorio2026.Turnos
 
         private void CargarSolicitudes()
         {
-            GvSolicitudes.DataSource = TurnoDatos.ListarSolicitados();
+            List<Turno> solicitados = TurnoDatos.ListarSolicitados();
+            GvSolicitudes.DataSource = solicitados;
             GvSolicitudes.DataBind();
             CargarHistorial();
+
+            // Los numeros de la cabecera (los pedidos pendientes van en amarillo si hay alguno)
+            List<Turno> vigentes = TurnoDatos.ListarTodos().FindAll(t => t.Estado != "Rechazado");
+            LtPorConfirmar.Text = solicitados.Count.ToString();
+            DivPorConfirmar.Attributes["class"] = solicitados.Count > 0 ? "cifra-alerta" : "";
+            LtHoy.Text = vigentes.Count(t => t.Fecha.Date == DateTime.Today).ToString();
+            LtSemana.Text = vigentes.Count(t => t.Fecha.Date >= DateTime.Today && t.Fecha.Date < DateTime.Today.AddDays(7)).ToString();
+        }
+
+        // Nombre y apellido reales del paciente (de la tabla PERSONA), se trae una vez por pedido
+        private Dictionary<int, string> nombres;
+        protected string Nombre(object idUsuario)
+        {
+            if (nombres == null) nombres = UsuarioDatos.NombresReales();
+            string nombre;
+            return HttpUtility.HtmlEncode(nombres.TryGetValue((int)idUsuario, out nombre) ? nombre : "-");
         }
 
         /* ----- Gestionar una solicitud ------------------------------------- */
@@ -37,8 +56,12 @@ namespace Consultorio2026.Turnos
 
             if (seleccionado == null) { PnGestion.Visible = false; return; }
 
-            LbDetalle.Text = seleccionado.NombrePaciente + " — " + seleccionado.Especialidad +
-                             " — " + seleccionado.Fecha.ToString("dd/MM/yyyy") + " " + seleccionado.Hora;
+            LtDetalle.Text = "<dl class=\"ficha\">"
+                + "<div><dt>Paciente</dt><dd>" + Nombre(seleccionado.IdUsuarioPaciente) + "</dd></div>"
+                + "<div><dt>Especialidad</dt><dd>" + HttpUtility.HtmlEncode(seleccionado.Especialidad) + "</dd></div>"
+                + "<div><dt>Pidió</dt><dd>" + seleccionado.Fecha.ToString("dddd d/M", new CultureInfo("es-AR")) + " · " + seleccionado.Hora + " hs</dd></div>"
+                + "<div><dt>Motivo</dt><dd>" + HttpUtility.HtmlEncode(seleccionado.TipoConsulta) + "</dd></div>"
+                + "</dl>";
 
             // El almanaque se dibuja sobre el mes del turno pedido
             ViewState["FechaPedida"] = seleccionado.Fecha;
@@ -157,11 +180,12 @@ namespace Consultorio2026.Turnos
             List<Turno> filtrados = todos.FindAll(t =>
                 (estado == "" || t.Estado == estado) &&
                 (especialidad == "" || t.Especialidad == especialidad) &&
-                (paciente == "" || t.NombrePaciente.IndexOf(paciente, StringComparison.OrdinalIgnoreCase) >= 0) &&
+                (paciente == "" || t.NombrePaciente.IndexOf(paciente, StringComparison.OrdinalIgnoreCase) >= 0
+                                || Nombre(t.IdUsuarioPaciente).IndexOf(paciente, StringComparison.OrdinalIgnoreCase) >= 0) &&
                 (!hayDesde || t.Fecha.Date >= desde.Date) &&
                 (!hayHasta || t.Fecha.Date <= hasta.Date));
 
-            LbResultado.Text = filtrados.Count + " de " + todos.Count + " turnos.";
+            LbResultado.Text = "Mostrando " + filtrados.Count + " de " + todos.Count + " turnos";
             GvHistorial.DataSource = filtrados;
             GvHistorial.DataBind();
         }

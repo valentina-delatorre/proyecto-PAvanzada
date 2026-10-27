@@ -3,7 +3,7 @@
 //     Este código fue generado por una herramienta.
 //
 //     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
-//     se vuelve a generar el código. 
+//     se vuelve a generar el código.
 // </generado automáticamente>
 //------------------------------------------------------------------------------
 
@@ -15,13 +15,31 @@ namespace Consultorio2026.Especialistas
     {
 
         /// <summary>
-        /// Control GvMedicos.
+        /// Control LtActivos.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GvMedicos;
+        protected global::System.Web.UI.WebControls.Literal LtActivos;
+
+        /// <summary>
+        /// Control LtEspecialidades.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LtEspecialidades;
+
+        /// <summary>
+        /// Control LtSemana.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LtSemana;
 
         /// <summary>
         /// Control PnAgenda.
@@ -33,13 +51,22 @@ namespace Consultorio2026.Especialistas
         protected global::System.Web.UI.WebControls.Panel PnAgenda;
 
         /// <summary>
-        /// Control LbDetalleMedico.
+        /// Control LtNombreMedico.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label LbDetalleMedico;
+        protected global::System.Web.UI.WebControls.Literal LtNombreMedico;
+
+        /// <summary>
+        /// Control LtFicha.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal LtFicha;
 
         /// <summary>
         /// Control BtCambiarActivoMedico.
@@ -58,6 +85,15 @@ namespace Consultorio2026.Especialistas
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GvAgenda;
+
+        /// <summary>
+        /// Control GvMedicos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView GvMedicos;
 
         /// <summary>
         /// Control TxtNombre.

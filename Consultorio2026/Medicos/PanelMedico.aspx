@@ -2,23 +2,27 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <h2>Mi panel</h2>
-    <asp:Label ID="LbBienvenida" runat="server" CssClass="subtitle-line" />
+    <section class="cabecera">
+        <div>
+            <span class="cabecera-eyebrow">Panel médico</span>
+            <h2><asp:Label ID="LbBienvenida" runat="server" /></h2>
+            <p>Tu agenda y los pedidos de tus pacientes.</p>
+        </div>
+        <dl class="cabecera-cifras">
+            <div><dt>Turnos hoy</dt><dd><asp:Literal ID="LtHoy" runat="server" /></dd></div>
+            <div><dt>Próximos</dt><dd><asp:Literal ID="LtProximos" runat="server" /></dd></div>
+            <div class="cifra-alerta"><dt>Por decidir</dt><dd><asp:Literal ID="LtPendientes" runat="server" /></dd></div>
+        </dl>
+    </section>
 
     <asp:Panel ID="PnPanel" runat="server">
 
-        <div class="stats-row">
-            <div class="stat-chip"><strong><asp:Literal ID="LtHoy" runat="server" /></strong><span>turnos hoy</span></div>
-            <div class="stat-chip"><strong><asp:Literal ID="LtProximos" runat="server" /></strong><span>próximos confirmados</span></div>
-            <div class="stat-chip"><strong><asp:Literal ID="LtPendientes" runat="server" /></strong><span>solicitudes pendientes</span></div>
-        </div>
-
         <div class="card">
-            <h3>Solicitudes pendientes de tu decisión</h3>
+            <h3>Pedidos para decidir</h3>
             <p class="subtitle-line">Pacientes que pidieron turno con vos. Aceptalo para sumarlo a tu agenda, o rechazalo.</p>
             <asp:GridView ID="GvPendientes" runat="server" AutoGenerateColumns="false" CssClass="data-table"
                 OnRowCommand="GvPendientes_RowCommand"
-                EmptyDataText="No tenés solicitudes pendientes. 🎉">
+                EmptyDataText="No tenés pedidos pendientes. Todo al día.">
                 <Columns>
                     <asp:BoundField DataField="Fecha" HeaderText="Fecha" DataFormatString="{0:dd/MM/yyyy}" />
                     <asp:BoundField DataField="Hora" HeaderText="Hora" />
@@ -29,7 +33,7 @@
                         <ItemTemplate>
                             <asp:Button runat="server" Text="Aceptar" CssClass="btn btn-mini"
                                 CommandName="Aceptar" CommandArgument='<%# Eval("IdTurno") %>' />
-                            <asp:Button runat="server" Text="Rechazar" CssClass="btn btn-mini btn-secondary"
+                            <asp:Button runat="server" Text="Rechazar" CssClass="btn btn-mini btn-peligro"
                                 CommandName="Rechazar" CommandArgument='<%# Eval("IdTurno") %>' />
                         </ItemTemplate>
                     </asp:TemplateField>

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using BIZ.Datos;
 using BIZ.Modelo;
 
@@ -18,8 +20,16 @@ namespace Consultorio2026.Especialistas
 
         private void CargarMedicos()
         {
-            GvMedicos.DataSource = MedicoDatos.ListarTodos();
+            List<Medico> medicos = MedicoDatos.ListarTodos();
+            GvMedicos.DataSource = medicos;
             GvMedicos.DataBind();
+
+            // Los numeros de la cabecera
+            List<Medico> activos = medicos.Where(m => m.Activo).ToList();
+            LtActivos.Text = activos.Count.ToString();
+            LtEspecialidades.Text = activos.Select(m => m.Especialidad).Distinct().Count().ToString();
+            LtSemana.Text = TurnoDatos.ListarTodos().Count(t => t.IdMedico.HasValue && t.Estado != "Rechazado"
+                && t.Fecha.Date >= DateTime.Today && t.Fecha.Date < DateTime.Today.AddDays(7)).ToString();
         }
 
         private void CargarUsuariosSinFicha()
@@ -47,12 +57,20 @@ namespace Consultorio2026.Especialistas
             if (m == null) { PnAgenda.Visible = false; return; }
 
             PnAgenda.Visible = true;
-            LbDetalleMedico.Text = "Dr/a. <strong>" + m.NombreCompleto + "</strong> — " + m.Especialidad +
-                                   " — Usuario: " + m.UsuarioVinculado +
-                                   " — Estado: " + (m.Activo ? "Activo" : "Dado de baja");
-            BtCambiarActivoMedico.Text = m.Activo ? "Dar de baja" : "Reactivar";
+            List<Turno> agenda = TurnoDatos.ListarTodosPorMedico(m.IdMedico);
+            int proximos = agenda.Count(t => t.Fecha.Date >= DateTime.Today && t.Estado != "Rechazado");
 
-            GvAgenda.DataSource = TurnoDatos.ListarTodosPorMedico(m.IdMedico);
+            LtNombreMedico.Text = "Dr/a. " + HttpUtility.HtmlEncode(m.Nombre + " " + m.Apellido);
+            LtFicha.Text = "<dl class=\"ficha\">"
+                + "<div><dt>Especialidad</dt><dd>" + HttpUtility.HtmlEncode(m.Especialidad) + "</dd></div>"
+                + "<div><dt>Usuario</dt><dd>" + HttpUtility.HtmlEncode(m.UsuarioVinculado) + "</dd></div>"
+                + "<div><dt>Estado</dt><dd>" + (m.Activo ? "Atiende" : "Dado de baja") + "</dd></div>"
+                + "<div><dt>Turnos próximos</dt><dd>" + proximos + "</dd></div>"
+                + "</dl>";
+            BtCambiarActivoMedico.Text = m.Activo ? "Dar de baja" : "Reactivar";
+            BtCambiarActivoMedico.CssClass = m.Activo ? "btn btn-mini btn-peligro" : "btn btn-mini";
+
+            GvAgenda.DataSource = agenda;
             GvAgenda.DataBind();
         }
 

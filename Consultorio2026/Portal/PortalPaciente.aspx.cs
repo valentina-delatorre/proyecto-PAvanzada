@@ -70,6 +70,15 @@ namespace Consultorio2026.Portal
             RpMisTurnos.DataSource = turnos;
             RpMisTurnos.DataBind();                    // el Repeater repite el HTML del .aspx una vez por turno
             LbSinTurnos.Visible = turnos.Count == 0;   // si no tiene ninguno, mostramos el cartelito
+
+            // La cabecera: "Hola, Carla" (el nombre real sale de la tabla PERSONA) y dos números:
+            // los turnos que tiene de hoy en adelante, y cuántos todavía no confirmó el consultorio.
+            string nombre;
+            UsuarioDatos.NombresReales().TryGetValue(idUsuario, out nombre);
+            LtSaludo.Text = "Hola, " + System.Web.HttpUtility.HtmlEncode((nombre ?? Session["NombreUsuario"].ToString()).Split(' ')[0]);
+            List<Turno> futuros = turnos.FindAll(t => t.Fecha.Date >= DateTime.Today && t.Estado != "Rechazado");
+            LtProximos.Text = futuros.Count.ToString();
+            LtEsperando.Text = futuros.FindAll(t => t.Estado == "Solicitado").Count.ToString();
         }
 
         // Estos dos métodos los usa el .aspx desde adentro del Repeater de "Mis turnos"
@@ -85,7 +94,7 @@ namespace Consultorio2026.Portal
         // (lo asigna el consultorio cuando lo confirma). En vez de dejar el hueco vacío, lo decimos.
         protected string Medico(object nombre)
         {
-            return nombre == null || nombre.ToString() == "" ? "Médico a asignar" : nombre.ToString();
+            return nombre == null || nombre.ToString() == "" || nombre.ToString() == "-" ? "Médico a asignar" : nombre.ToString();
         }
 
         /* ----- Lo que pasa cuando el paciente toca algo ------------------------ */

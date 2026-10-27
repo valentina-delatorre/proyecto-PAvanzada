@@ -9,5 +9,6 @@
         public string NombreCompleto { get; set; }
         public string Dni { get; set; }
         public string Especialidad { get; set; }
+        public string Email { get; set; }
     }
 }

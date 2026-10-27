@@ -8,6 +8,63 @@
     --sage: #9fc2af;
     --amber: #d7a34e;
     --error: #b3413a;
+
+    /* Colores segun su uso. En modo oscuro se redefinen abajo y todo el
+       sistema cambia solo, sin tocar cada pantalla. */
+    --superficie: #fff;          /* tarjetas, tablas, paneles */
+    --superficie-2: #f2f6f4;     /* rellenos suaves: fichas, chips */
+    --campo: #fbfcfc;            /* fondo de los inputs */
+    --linea: #e2e8e5;
+    --linea-suave: #edf1ef;
+    --linea-fuerte: #d0dad5;
+    --texto-medio: #4a5852;
+    --texto-suave: #6b7d76;
+    --texto-tenue: #a3afab;
+    --acento: var(--teal);       /* el verde de la marca usado como texto o link */
+    --acento-fuerte: var(--teal-deep);
+    --aviso-fondo: #fdf6e6;
+    --aviso-linea: #f1e5c8;
+    --aviso-texto: #8a6510;
+    --peligro-fondo: #fbecea;
+    --peligro-linea: #eba39e;
+    --ok-fondo: #e9f5ee;
+    --ok-linea: #9fd5b4;
+    --ok: #2f8a57;
+    --info-fondo: #e6eef6;
+    --info: #3d6a96;
+}
+
+/* ----- Modo oscuro -----
+   Lo activa el boton de la luna del menu (Content/Site.js): pone
+   data-tema="oscuro" en <html> y lo recuerda en el navegador. */
+:root[data-tema="oscuro"] {
+    color-scheme: dark;
+    --paper: #0e1513;
+    --ink: #e4ece8;
+    --sage: #9fc2af;
+    --error: #e5837a;
+
+    --superficie: #151f1c;
+    --superficie-2: #1c2925;
+    --campo: #111a17;
+    --linea: #26352f;
+    --linea-suave: #1f2c28;
+    --linea-fuerte: #36493f;
+    --texto-medio: #b9c7c1;
+    --texto-suave: #8fa39b;
+    --texto-tenue: #5c6f68;
+    --acento: #8fcfb5;
+    --acento-fuerte: #b8e3d1;
+    --aviso-fondo: #2a2417;
+    --aviso-linea: #4f4226;
+    --aviso-texto: #e4bb6c;
+    --peligro-fondo: #2e1c1a;
+    --peligro-linea: #683530;
+    --ok-fondo: #15291e;
+    --ok-linea: #2b5a3f;
+    --ok: #62c48d;
+    --info-fondo: #18232f;
+    --info: #8db8e2;
 }
 
 * {
@@ -29,7 +86,7 @@ h1, h2, h3 {
 }
 
 a {
-    color: var(--teal);
+    color: var(--acento);
 }
 
 .btn {

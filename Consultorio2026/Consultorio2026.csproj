@@ -67,6 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Asistente\Consultar.ashx" />
+    <Content Include="Content\Asistente.css" />
+    <Content Include="Content\Asistente.js" />
     <Content Include="Content\Home.css" />
     <Content Include="Content\Landing.css" />
     <Content Include="Content\Site.css" />
@@ -86,6 +89,7 @@
     <Content Include="Portal\AgendarTurno.aspx" />
     <Content Include="Portal\PortalPaciente.aspx" />
     <Content Include="Reportes\ReporteDiario.aspx" />
+    <Content Include="Seguridad\Accesos.aspx" />
     <Content Include="Seguridad\Login.aspx" />
     <Content Include="Seguridad\Login.css" />
     <Content Include="Seguridad\RecuperarPass.aspx" />
@@ -96,6 +100,16 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Asistente\Consultar.ashx.cs">
+      <DependentUpon>Consultar.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Seguridad\Accesos.aspx.cs">
+      <DependentUpon>Accesos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Seguridad\Accesos.aspx.designer.cs">
+      <DependentUpon>Accesos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Cuenta\MiCuenta.aspx.cs">
       <DependentUpon>MiCuenta.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -238,6 +252,7 @@
     <Content Include="Usuarios\Web.config" />
     <Content Include="Turnos\Web.config" />
     <Content Include="Portal\Web.config" />
+    <Content Include="Asistente\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

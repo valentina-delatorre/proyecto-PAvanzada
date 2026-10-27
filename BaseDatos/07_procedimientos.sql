@@ -1,8 +1,11 @@
 /* =========================================================================
    07 - Procedimientos almacenados.
    SP_AGENDA_MES: arma en una tabla temporal el mes completo de un
-   profesional (un renglon por dia, con cuantos turnos confirmados tiene y
-   a que hora) para dibujar el almanaque del modulo de Turnos.
+   profesional (un renglon por dia, con cuantos turnos ocupados tiene y
+   a que hora) para dibujar el almanaque del modulo de Turnos y el del
+   paciente. Ocupa el horario tanto un turno confirmado como uno pedido,
+   y tambien los pedidos "sin preferencia" de su especialidad, que todavia
+   no tienen medico.
    Va despues del 03. Se puede correr las veces que haga falta.
    El servidor de la facultad es SQL Server 2008 R2: por eso no se usan
    CREATE OR ALTER, DATEFROMPARTS ni STRING_AGG.
@@ -40,28 +43,39 @@ BEGIN
         SET @f = DATEADD(DAY, 1, @f);
     END
 
-    -- Se completan los dias que tienen turnos confirmados con ese profesional
+    -- Los turnos que le ocupan un horario a este profesional:
+    --   - los pedidos o confirmados con el (los rechazados liberan el horario)
+    --   - los pedidos "sin preferencia" de su especialidad: todavia no tienen
+    --     medico (ID_AGENDA nulo), pero ese horario ya lo pidio alguien
+    DECLARE @ESPECIALIDAD VARCHAR(80) = (SELECT E.NOMBRE FROM PERSONA P
+                                         JOIN ESPECIALIDAD E ON E.ID_ESPECIALIDAD = P.ID_ESPECIALIDAD
+                                         WHERE P.ID_PERSONA = @ID_PROFESIONAL);
+
+    SELECT T.FECHA_TURNO, T.HORA_TURNO
+    INTO #OCUPADOS
+    FROM TURNOS T
+    LEFT JOIN AGENDA A     ON A.ID_AGENDA = T.ID_AGENDA
+    LEFT JOIN TURNO_APP TA ON TA.ID_TURNO = T.ID_TURNO
+    WHERE T.ESTADO IN ('Solicitado', 'Confirmado')
+      AND (A.ID_PERSONA_PROFESIONAL = @ID_PROFESIONAL
+           OR (T.ID_AGENDA IS NULL AND TA.ESPECIALIDAD_SOLICITADA = @ESPECIALIDAD));
+
+    -- Se completan los dias que tienen horarios ocupados
     UPDATE D
     SET TURNOS   = X.CANTIDAD,
         HORARIOS = X.HORAS
     FROM #DIAS D
     JOIN (
-        SELECT T.FECHA_TURNO,
+        SELECT O.FECHA_TURNO,
                COUNT(*) AS CANTIDAD,
                -- las horas del dia unidas con ' - ' (FOR XML PATH es el STRING_AGG de 2008)
-               STUFF((SELECT ' - ' + CONVERT(VARCHAR(5), T2.HORA_TURNO)
-                      FROM TURNOS T2
-                      JOIN AGENDA A2 ON A2.ID_AGENDA = T2.ID_AGENDA
-                      WHERE A2.ID_PERSONA_PROFESIONAL = @ID_PROFESIONAL
-                        AND T2.ESTADO = 'Confirmado'
-                        AND T2.FECHA_TURNO = T.FECHA_TURNO
-                      ORDER BY T2.HORA_TURNO
+               STUFF((SELECT ' - ' + CONVERT(VARCHAR(5), O2.HORA_TURNO)
+                      FROM #OCUPADOS O2
+                      WHERE O2.FECHA_TURNO = O.FECHA_TURNO
+                      ORDER BY O2.HORA_TURNO
                       FOR XML PATH('')), 1, 3, '') AS HORAS
-        FROM TURNOS T
-        JOIN AGENDA A ON A.ID_AGENDA = T.ID_AGENDA
-        WHERE A.ID_PERSONA_PROFESIONAL = @ID_PROFESIONAL
-          AND T.ESTADO = 'Confirmado'
-        GROUP BY T.FECHA_TURNO
+        FROM #OCUPADOS O
+        GROUP BY O.FECHA_TURNO
     ) X ON X.FECHA_TURNO = D.FECHA;
 
     SELECT FECHA, DIA, TURNOS, HORARIOS
@@ -69,5 +83,6 @@ BEGIN
     ORDER BY FECHA;
 
     DROP TABLE #DIAS;
+    DROP TABLE #OCUPADOS;
 END;
 GO

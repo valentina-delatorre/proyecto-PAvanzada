@@ -39,10 +39,13 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsistenteIA.cs" />
     <Compile Include="Correo.cs" />
+    <Compile Include="Datos\AccesoDatos.cs" />
     <Compile Include="Datos\CodigoDatos.cs" />
     <Compile Include="Datos\Conexion.cs" />
     <Compile Include="Datos\DatoPacienteDatos.cs" />
@@ -50,6 +53,7 @@
     <Compile Include="Datos\ReporteDatos.cs" />
     <Compile Include="Datos\TurnoDatos.cs" />
     <Compile Include="Datos\UsuarioDatos.cs" />
+    <Compile Include="Modelo\Acceso.cs" />
     <Compile Include="Modelo\DatoPaciente.cs" />
     <Compile Include="Modelo\DiaAgenda.cs" />
     <Compile Include="Modelo\Medico.cs" />
@@ -58,6 +62,7 @@
     <Compile Include="Modelo\Turno.cs" />
     <Compile Include="Modelo\Usuario.cs" />
     <Compile Include="Modelo\UsuarioListado.cs" />
+    <Compile Include="Ollama.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
